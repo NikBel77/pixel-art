@@ -1,8 +1,9 @@
 import React from 'react';
+import './main.css'
 
 function App() {
   return (
-    <div></div>
+    <div className='app grey lighten-2'></div>
   );
 }
 
