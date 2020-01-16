@@ -7,4 +7,36 @@
 .app {
     width: 100vw;
     height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 5fr 2fr 2fr;
+    grid-template-rows: .3fr 1fr 1.3fr;
+    grid-template-areas: 
+    "head head head head"
+    "tool paint frame prev"
+    "tool paint frame side"
+    ;
+}
+
+.header {
+    grid-area: head;
+}
+
+.side-bar {
+    grid-area: side;
+}
+
+.painter {
+    grid-area: paint;
+}
+
+.frame-bar {
+    grid-area: frame;
+}
+
+.preview {
+    grid-area: prev;
+}
+
+.tool-bar {
+    grid-area: tool;
 }

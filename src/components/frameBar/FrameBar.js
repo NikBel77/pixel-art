@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class FrameBar extends Component {
     render() {
         return (
-            <div></div>
+            <div className='frame-bar'></div>
         )
     }
 }
