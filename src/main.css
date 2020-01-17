@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    font-size: 15px;
+}
+
 .app {
     width: 100vw;
     height: 100vh;
@@ -13,20 +17,11 @@
     grid-template-areas: 
     "head head head head"
     "tool paint frame prev"
-    "tool paint frame side"
-    ;
-}
-
-.header {
-    grid-area: head;
+    "tool paint frame side";
 }
 
 .side-bar {
     grid-area: side;
-}
-
-.painter {
-    grid-area: paint;
 }
 
 .frame-bar {
