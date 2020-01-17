@@ -3,30 +3,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: .1rem;
 }
 
 .painter__inner {
     position: relative;
     box-sizing: content-box;
-    border: 2px solid #3f51b5;
+    border: 2px solid var(--main-color);
 }
 
 .painter__coords {
+    display: block;
     position: absolute;
-    padding: .4rem;
+    padding: .4rem .6rem;
     bottom: 0px;
     right: 0;
     color: white;
-    background-color: #3f51b5;
+    background-color: var(--main-color);
 }
 
 .painter__shadow {
     position: absolute;
     display: none;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--shadow-color);
 }
 
 .canvas {
-    background: url('../../assets/background.png');
+    background: url('./background/background.png');
     box-sizing: content-box;
 }

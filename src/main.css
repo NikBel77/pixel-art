@@ -1,3 +1,12 @@
+@font-face {font-family: "FR73 Pixel W00 Regular";
+    src: url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.eot");
+    src: url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.woff2") format("woff2"),
+    url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.woff") format("woff"),
+    url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.ttf") format("truetype"),
+    url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.svg#FR73 Pixel W00 Regular") format("svg");
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,6 +14,12 @@
 }
 
 :root {
+    --main-color: #3f51b5;
+    --shadow-color: rgba(0, 0, 0, .5);
+    --button-bkg-color: #82b1ff;
+    --button-bkg-fade-color: #82b2ff96;
+    --mark-color: #9c27b0;
+    --secondary-color: #009688;
     font-size: 15px;
 }
 
@@ -12,7 +27,7 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 5fr 2fr 2fr;
+    grid-template-columns: 80px 540px 1fr 1fr;
     grid-template-rows: .3fr 1fr 1.3fr;
     grid-template-areas: 
     "head head head head"
@@ -30,8 +45,4 @@
 
 .preview {
     grid-area: prev;
-}
-
-.tool-bar {
-    grid-area: tool;
 }

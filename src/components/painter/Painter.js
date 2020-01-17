@@ -9,7 +9,8 @@ class Painter extends Component {
             canvasSize: {
                 width: 512,
                 height: 512,
-                scale: 16,
+                scale: 4,
+                penSize: 1,
             },
             coords: {
                 x: 0,
@@ -20,17 +21,18 @@ class Painter extends Component {
 
     updateCoords(e) {
         const [x, y] = this.getCoordsFromOffset(e.offsetX, e.offsetY);
-        [this.refs.fildX.innerText, this.refs.fildY.innerText] = [x, y];
 
-        if(this.state.coords.x !== x || this.state.coords.y !== y) {
-            this.setState(({ coords }) => {
-                coords.x = x;
-                coords.y = y;
-            });
+        if(this.state.coords.x === x && this.state.coords.y === y) return;
 
-            this.refs.shadow.style.top = `${y * this.state.canvasSize.scale}px`;
-            this.refs.shadow.style.left = `${x * this.state.canvasSize.scale}px`;
-        }
+        this.setState(() => ({
+            coords:{
+                x: x,
+                y: y,
+            }
+        }))
+
+        this.refs.shadow.style.top = `${y * this.state.canvasSize.scale}px`;
+        this.refs.shadow.style.left = `${x * this.state.canvasSize.scale}px`;
     }
 
     getCoordsFromOffset(offsetX, offsetY) {
@@ -52,8 +54,8 @@ class Painter extends Component {
                             height: `${this.state.canvasSize.height}px`}}
                         onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}>
                     </canvas>
-                    <div className='painter__coords'>
-                        x : <span ref='fildY'>0</span> y : <span ref='fildX'>0</span>
+                    <div className='painter__coords' ref='coordsScreen'>
+                        X : {this.state.coords.x} Y : {this.state.coords.y}
                     </div>
                     <div className='painter__shadow'
                         style={{width: `${this.state.canvasSize.scale}px`,
