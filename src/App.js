@@ -6,19 +6,11 @@ import SideBar from './components/sideBar/SideBar'
 import Header from './components/header/Header'
 import Painter from './components/painter/Painter'
 import Preview from './components/preview/Preview'
-
-const toolList = {
-  pen: 'pen',
-  dropper: 'dropper',
-  fill: 'fill',
-  fillAll: 'fillAll',
-  fillAllSame: 'fillAllSame',
-  eraser: 'eraser'
-}
+import toolList from './components/toolBar/toolList'
 
 class App extends Component{
   state = {
-    currentTool: toolList.pen,
+    currentTool: toolList[0].name,
   }
 
   setCurrentTool = (tool) => {
@@ -29,7 +21,7 @@ class App extends Component{
     return (
     <div className='app grey lighten-2'>
       <Header />
-      <ToolBar setCurrentTool={ this.setCurrentTool }/>
+      <ToolBar setCurrentTool={ this.setCurrentTool } />
       <Painter currentTool={ this.state.currentTool }/>
       <FrameBar />
       <Preview />
@@ -38,4 +30,4 @@ class App extends Component{
     )}
 }
 
-export default App;
+export default App

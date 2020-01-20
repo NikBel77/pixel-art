@@ -30,23 +30,30 @@ class Painter extends Component {
 
     componentWillUpdate(props) {
         if(props.currentTool !== this.refs.mainCanvas.dataset.tool) {
-            console.log('changed tool');
-            this.setCanvasEvents(props.currentTool);
+            this.toggleCanvasEvents(this.refs.mainCanvas.dataset.tool, true);
+            this.toggleCanvasEvents(props.currentTool);
             this.refs.mainCanvas.dataset.tool = props.currentTool;
         }
         return true;
     }
 
-    setCanvasEvents(tool) {
+    toggleCanvasEvents(tool, isRemove = false) {
+        if(!tool) return;
         if(!canvasEventList[tool]) throw Error('no events in list: check canvasEventsList.js');
 
         const canvas = this.refs.mainCanvas;
         const list = canvasEventList[tool];
         const events = Object.keys(list);
 
-        events.forEach(event => {
-            canvas.addEventListener(event, list[event]);
-        });
+        if(isRemove) {
+            events.forEach(event => {
+                canvas.removeEventListener(event, list[event]);
+            });
+        } else {
+            events.forEach(event => {
+                canvas.addEventListener(event, list[event]);
+            });
+        }
     }
 
     updateCoords(e) {
@@ -121,4 +128,4 @@ class Painter extends Component {
     }
 }
 
-export default Painter;
+export default Painter
