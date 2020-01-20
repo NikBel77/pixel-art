@@ -5,8 +5,6 @@ import toolList from './toolList'
 
 // const activeClassBtn = 'tool-bar__tool-btn-active';
 // const activeClassSizeBtn = 'tool-bar__size-btn-active';
-const currentColor = '#f44336';
-const prevColor = '#2196f3';
 
 class ToolBar extends Component {
     render() {
@@ -25,9 +23,9 @@ class ToolBar extends Component {
                 </div>
                 <div className='tool-bar__color-switcher indigo z-depth-2'>
                     <div className='tool-bar__color-holder'
-                        style={{bottom: '2px', right: '6px', background: prevColor}}></div>
+                        style={{bottom: '2px', right: '6px', background: this.props.prevColor}}></div>
                     <div className='tool-bar__color-holder'
-                        style={{top: '2px', left: '6px', background: currentColor}}></div>
+                        style={{top: '2px', left: '6px', background: this.props.currentColor}}></div>
                 </div>
             </div>
         )

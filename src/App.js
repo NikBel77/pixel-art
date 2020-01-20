@@ -11,6 +11,9 @@ import toolList from './components/toolBar/toolList'
 class App extends Component{
   state = {
     currentTool: toolList[0].name,
+    currentColor: 'rgba(244, 67, 54, 255)',
+    prevColor: 'rgba(0, 17, 255, 255)',
+
   }
 
   setCurrentTool = (tool) => {
@@ -21,8 +24,12 @@ class App extends Component{
     return (
     <div className='app grey lighten-2'>
       <Header />
-      <ToolBar setCurrentTool={ this.setCurrentTool } />
-      <Painter currentTool={ this.state.currentTool }/>
+      <ToolBar setCurrentTool={ this.setCurrentTool }
+        currentColor={ this.state.currentColor }
+        prevColor={ this.state.prevColor } />
+      <Painter currentTool={ this.state.currentTool }
+        currentColor={ this.state.currentColor }
+        prevColor={ this.state.prevColor } />
       <FrameBar />
       <Preview />
       <SideBar />

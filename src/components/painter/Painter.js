@@ -21,11 +21,14 @@ class Painter extends Component {
     }
     
     componentDidMount() {
-        this.refs.shadow.addEventListener('mousedown', (e) => { 
+        this.refs.shadow.addEventListener('mousedown', (e) => {
+            e.preventDefault(); 
             e.target.style.display = 'none';
             this.refs.mainCanvas.dispatchEvent(new MouseEvent('mousedown', e));
-            this.refs.mainCanvas.dispatchEvent(new MouseEvent('click', e));
         });
+        document.body.addEventListener('contextmenu', (e) => e.preventDefault());
+        this.refs.mainCanvas.width = this.state.canvasSize.width;
+        this.refs.mainCanvas.height = this.state.canvasSize.height;
     }
 
     componentWillUpdate(props) {
@@ -105,9 +108,11 @@ class Painter extends Component {
                     onMouseLeave={() => { this.refs.shadow.style.display = 'none' }}
                     onMouseMove={ this.checkShadow }>
 
-                    <canvas className='canvas' ref='mainCanvas' data-tool={null}
-                        style={{width: `${this.state.canvasSize.width}px`,
-                            height: `${this.state.canvasSize.height}px`}}
+                    <canvas className='canvas' ref='mainCanvas'
+                        data-tool={null}
+                        data-color1={this.props.currentColor}
+                        data-color2={this.props.prevColor}
+                        data-scale={this.state.canvasSize.scale}
                         onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}>
                     </canvas>
 
