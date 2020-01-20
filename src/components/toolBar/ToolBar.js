@@ -14,6 +14,10 @@ const currentColor = '#f44336';
 const prevColor = '#2196f3';
 
 class ToolBar extends Component {
+    changeTool = (e) => {
+        this.props.setCurrentTool(e.target.dataset.tool);
+    }
+
     render() {
         return (
             <div className='tool-bar'>
@@ -32,13 +36,20 @@ class ToolBar extends Component {
                     </div>
                 </div>
                 <div className='tool-bar__panel indigo z-depth-2'>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${pencil})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${bucket})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${brush})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${roller})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${eraser})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${dropper})`}}></div>
-                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${palette})`}}></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${pencil})`}}
+                        data-tool='pen' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${bucket})`}}
+                        data-tool='bucket' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${brush})`}}
+                        data-tool='brush' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${roller})`}}
+                        data-tool='roller' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${eraser})`}}
+                        data-tool='eraser' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${dropper})`}}
+                        data-tool='dropper' onClick={ this.changeTool }></div>
+                    <div className='tool-bar__tool-btn' style={{backgroundImage: `url(${palette})`}}
+                        data-tool='palette' onClick={ this.changeTool }></div>
                 </div>
                 <div className='tool-bar__color-switcher indigo z-depth-2'>
                     <div className='tool-bar__color-holder'
