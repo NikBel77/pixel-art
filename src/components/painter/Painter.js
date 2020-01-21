@@ -21,6 +21,7 @@ class Painter extends Component {
     }
     
     componentDidMount() {
+        this.bindEvents(canvasEventList);
         this.refs.shadow.addEventListener('mousedown', (e) => {
             e.preventDefault(); 
             e.target.style.display = 'none';
@@ -38,6 +39,19 @@ class Painter extends Component {
             this.refs.mainCanvas.dataset.tool = props.currentTool;
         }
         return true;
+    }
+
+    bindEvents(eventList) {
+        if(typeof eventList !== 'object') throw Error('event list must be an object');
+
+        Object.keys(eventList).forEach((tool) => {
+            if (typeof eventList[tool] !== 'object') throw Error('every item in event list must be an object');
+
+            Object.keys(eventList[tool]).forEach((event) => {
+                if (typeof eventList[tool][event] !== 'function') throw Error('event must by a function');
+                eventList[tool][event] = eventList[tool][event].bind(this);
+            });
+        });
     }
 
     toggleCanvasEvents(tool, isRemove = false) {
@@ -110,9 +124,6 @@ class Painter extends Component {
 
                     <canvas className='canvas' ref='mainCanvas'
                         data-tool={null}
-                        data-color1={this.props.currentColor}
-                        data-color2={this.props.prevColor}
-                        data-scale={this.state.canvasSize.scale}
                         onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}>
                     </canvas>
 
