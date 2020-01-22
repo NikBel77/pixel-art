@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
 import './painter.css'
-import canvasEventList from './canvasEventList';
+import canvasEventList from './canvasEventList'
+import { connect } from 'react-redux'
 
 class Painter extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            canvasSize: {
-                width: 512,
-                height: 512,
-                scale: 8,
-                penSize: 1,
-            },
             coords: {
                 x: 0,
                 y: 0,
             },
         }
+        this.activeTool = this.props.activeTool
     }
     
     componentDidMount() {
@@ -28,15 +24,16 @@ class Painter extends Component {
             this.refs.mainCanvas.dispatchEvent(new MouseEvent('mousedown', e));
         });
         document.body.addEventListener('contextmenu', (e) => e.preventDefault());
-        this.refs.mainCanvas.width = this.state.canvasSize.width;
-        this.refs.mainCanvas.height = this.state.canvasSize.height;
+        this.refs.mainCanvas.width = this.props.canvasSize.width;
+        this.refs.mainCanvas.height = this.props.canvasSize.height;
+        this.toggleCanvasEvents(this.activeTool)
     }
 
-    componentWillUpdate(props) {
-        if(props.currentTool !== this.refs.mainCanvas.dataset.tool) {
-            this.toggleCanvasEvents(this.refs.mainCanvas.dataset.tool, true);
-            this.toggleCanvasEvents(props.currentTool);
-            this.refs.mainCanvas.dataset.tool = props.currentTool;
+    shouldComponentUpdate(nextProps) {
+        if(nextProps.activeTool !== this.activeTool) {
+            this.toggleCanvasEvents(this.activeTool, true);
+            this.toggleCanvasEvents(nextProps.activeTool);
+            this.activeTool = nextProps.activeTool;
         }
         return true;
     }
@@ -85,13 +82,13 @@ class Painter extends Component {
             }
         });
 
-        this.refs.shadow.style.top = `${y * this.state.canvasSize.scale}px`;
-        this.refs.shadow.style.left = `${x * this.state.canvasSize.scale}px`;
+        this.refs.shadow.style.top = `${y * this.props.canvasSize.scale}px`;
+        this.refs.shadow.style.left = `${x * this.props.canvasSize.scale}px`;
     }
 
     getCoordsFromOffset(offsetX, offsetY) {
-        const x = Math.floor(offsetX / this.state.canvasSize.scale);
-        const y = Math.floor(offsetY / this.state.canvasSize.scale);
+        const x = Math.floor(offsetX / this.props.canvasSize.scale);
+        const y = Math.floor(offsetY / this.props.canvasSize.scale);
         return [x >= 0 ? x : 0, y >= 0 ? y : 0];
     }
 
@@ -116,8 +113,8 @@ class Painter extends Component {
             <div className='painter'>
 
                 <div className='painter__inner z-depth-4'
-                    style={{width: `${this.state.canvasSize.width}px`,
-                        height: `${this.state.canvasSize.height}px`}}
+                    style={{width: `${this.props.canvasSize.width}px`,
+                        height: `${this.props.canvasSize.height}px`}}
                     onMouseEnter={() => { this.refs.shadow.style.display = 'Block' }}
                     onMouseLeave={() => { this.refs.shadow.style.display = 'none' }}
                     onMouseMove={ this.checkShadow }>
@@ -129,12 +126,12 @@ class Painter extends Component {
 
                     <div className='painter__coords painter__coords-rigth-side'
                         ref='coordsScreen' onMouseEnter={(e) => { this.toggleCoordsSide(e.target) }}>
-                        X : {this.state.coords.x} Y : {this.state.coords.y} Tool : {this.props.currentTool}
+                        X : {this.state.coords.x} Y : {this.state.coords.y} Tool : {this.props.activeTool}
                     </div>
 
                     <div className='painter__shadow'
-                        style={{width: `${this.state.canvasSize.scale}px`,
-                            height: `${this.state.canvasSize.scale}px`,
+                        style={{width: `${this.props.canvasSize.scale}px`,
+                            height: `${this.props.canvasSize.scale}px`,
                             display: 'none'}}
                         ref='shadow'
                     ></div>
@@ -144,4 +141,13 @@ class Painter extends Component {
     }
 }
 
-export default Painter
+export default connect(
+    (state) => ({
+        mainColor: state.colorStore.mainColor,
+        auxColor: state.colorStore.auxColor,
+        initialColor: state.colorStore.initialColor,
+        activeTool: state.toolStore.activeTool,
+        canvasSize: state.sizeStore
+    }),
+    {}
+)(Painter);

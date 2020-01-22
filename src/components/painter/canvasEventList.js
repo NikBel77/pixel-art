@@ -5,8 +5,8 @@ export default {
         mousedown: function(e) {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const scale = this.state.canvasSize.scale;
-            const color = e.which === 1 ? this.props.currentColor : this.props.prevColor;
+            const scale = this.props.canvasSize.scale;
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
             const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
             let imgData = ctx.getImageData(x, y, scale, scale);
             imgData = paintAllPixel(imgData, color);
@@ -16,8 +16,8 @@ export default {
             if(e.which === 0) return;
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const scale = this.state.canvasSize.scale;
-            const color = e.which === 1 ? this.props.currentColor : this.props.prevColor;
+            const scale = this.props.canvasSize.scale;
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
             const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
             if (x === this.state.coords.x * scale && y / scale === this.state.coords.y * scale) return;
 
@@ -35,9 +35,9 @@ export default {
         mousedown: function(e) {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const color = e.which === 1 ? this.props.currentColor : this.props.prevColor;
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
 
-            let imgData = ctx.getImageData(0, 0, this.state.canvasSize.width, this.state.canvasSize.height);
+            let imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
             imgData = paintAllPixel(imgData, color);
             ctx.putImageData(imgData, 0, 0);
         }
@@ -51,7 +51,7 @@ export default {
         mousedown: function(e) {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const scale = this.state.canvasSize.scale;
+            const scale = this.props.canvasSize.scale;
             const color = this.props.initialColor;
             const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
             let imgData = ctx.getImageData(x, y, scale, scale);
@@ -62,7 +62,7 @@ export default {
             if(e.which === 0) return;
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const scale = this.state.canvasSize.scale;
+            const scale = this.props.canvasSize.scale;
             const color = this.props.initialColor;
             const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
             if (x === this.state.coords.x * scale && y / scale === this.state.coords.y * scale) return;

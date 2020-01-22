@@ -6,38 +6,20 @@ import SideBar from './components/sideBar/SideBar'
 import Header from './components/header/Header'
 import Painter from './components/painter/Painter'
 import Preview from './components/preview/Preview'
-import toolList from './components/toolBar/toolList'
 
 class App extends Component{
-  state = {
-    currentTool: toolList[0].name,
-    currentColor: 'rgba(244, 67, 54, 255)',
-    prevColor: 'rgba(0, 17, 255, 255)',
-    initialColor: 'rgba(0, 0, 0, 0)'
-  }
-
-  setCurrentTool = (tool) => {
-    this.setState({ currentTool: tool });
-  }
-
   render() {
     return (
     <div className='app grey lighten-2'>
       <Header />
-      <ToolBar 
-        setCurrentTool={ this.setCurrentTool }
-        currentColor={ this.state.currentColor }
-        prevColor={ this.state.prevColor } />
-      <Painter 
-        currentTool={ this.state.currentTool }
-        currentColor={ this.state.currentColor }
-        prevColor={ this.state.prevColor }
-        initialColor={ this.state.initialColor } />
+      <ToolBar />
+      <Painter />
       <FrameBar />
       <Preview />
       <SideBar />
+      <div></div>
     </div>
     )}
 }
 
-export default App
+export default App;
