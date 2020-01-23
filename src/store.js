@@ -43,9 +43,44 @@ function toolStore(state = initialToolState, action) {
     }
 }
 
+//curentFrameStore
+
+const initialFrameData = 0;
+
+function currentFrameStore(state = initialFrameData, action) {
+    switch(action.type) {
+        case 'CHANGE_CURRENT_FRAME': return action.number;
+        default: return state;
+    }
+}
+
+//ImageDataStore
+
+const createCleanImageData = () => new ImageData(initialSizeStore.width, initialSizeStore.height);
+const initialImageDataState = [{ imageData: createCleanImageData(), dataURL: null}];
+
+function imageDataStore(state = initialImageDataState, action) {
+    switch(action.type) {
+        case 'ADD_FRAME': return [...state, { imageData: createCleanImageData(), dataURL: null }];
+        case 'CHANGE_DATA_URL': return state.map((data, i) => {
+            if(i === action.number) {
+                return { imageData: data.imageData, dataURL: action.dataURL };
+            }
+            return data;
+        });
+        case 'CHANGE_IMAGE_DATA': return state.map((data, i) => {
+            if(i === action.number) {
+                return { imageData: action.imageData, dataURL: data.dataURL };
+            }
+            return data;
+        });
+        default: return state;
+    }
+}
+
 //combine
 
-const appStore = combineReducers({ colorStore, toolStore, sizeStore });
+const appStore = combineReducers({ colorStore, toolStore, sizeStore, imageDataStore, currentFrameStore });
 const store = createStore(appStore);
 
 export { store }

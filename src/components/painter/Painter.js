@@ -13,7 +13,8 @@ class Painter extends Component {
                 y: 0,
             },
         }
-        this.activeTool = this.props.activeTool
+        this.activeTool = this.props.activeTool;
+        this.activeFrame = this.props.currentFrame;
     }
     
     componentDidMount() {
@@ -23,13 +24,25 @@ class Painter extends Component {
             e.target.style.display = 'none';
             this.refs.mainCanvas.dispatchEvent(new MouseEvent('mousedown', e));
         });
+        this.refs.shadow.addEventListener('mouseup', (e) => {
+            this.refs.mainCanvas.dispatchEvent(new MouseEvent('mouseup', e));
+        });
         document.body.addEventListener('contextmenu', (e) => e.preventDefault());
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
-        this.toggleCanvasEvents(this.activeTool)
+        this.toggleCanvasEvents(this.activeTool);
+        this.props.addNextDataUrl(this.refs.mainCanvas.toDataURL(), this.props.currentFrame);
     }
 
     shouldComponentUpdate(nextProps) {
+        if(this.activeFrame !== nextProps.currentFrame) {
+            const ctx = this.refs.mainCanvas.getContext('2d')
+            const imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+
+            this.props.saveImageData(imgData, this.activeFrame);
+            ctx.putImageData(this.props.bufferArray[nextProps.currentFrame].imageData, 0, 0);
+            this.activeFrame = nextProps.currentFrame;
+        }
         if(nextProps.activeTool !== this.activeTool) {
             this.toggleCanvasEvents(this.activeTool, true);
             this.toggleCanvasEvents(nextProps.activeTool);
@@ -121,7 +134,8 @@ class Painter extends Component {
 
                     <canvas className='canvas' ref='mainCanvas'
                         data-tool={null}
-                        onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}>
+                        onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}
+                        onMouseUp={(e) => { this.props.addNextDataUrl(e.target.toDataURL(), this.props.currentFrame) }}>
                     </canvas>
 
                     <div className='painter__coords painter__coords-rigth-side'
@@ -147,7 +161,16 @@ export default connect(
         auxColor: state.colorStore.auxColor,
         initialColor: state.colorStore.initialColor,
         activeTool: state.toolStore.activeTool,
-        canvasSize: state.sizeStore
+        canvasSize: state.sizeStore,
+        currentFrame: state.currentFrameStore,
+        bufferArray: state.imageDataStore,
     }),
-    {}
+    (dispatch) => ({
+        saveImageData: (imageData, number) => {
+            dispatch({ type: 'CHANGE_IMAGE_DATA', imageData, number })
+        },
+        addNextDataUrl: (dataURL, number) => {
+          dispatch({ type: 'CHANGE_DATA_URL', dataURL, number });
+        }
+    })
 )(Painter);

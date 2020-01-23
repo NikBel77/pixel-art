@@ -17,7 +17,6 @@ class App extends Component{
       <FrameBar />
       <Preview />
       <SideBar />
-      <div></div>
     </div>
     )}
 }
