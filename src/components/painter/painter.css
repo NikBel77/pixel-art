@@ -10,6 +10,7 @@
     position: relative;
     box-sizing: content-box;
     border: 2px solid var(--main-color);
+    overflow: hidden;
 }
 
 .painter__coords {

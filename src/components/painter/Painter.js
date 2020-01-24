@@ -83,20 +83,14 @@ class Painter extends Component {
         }
     }
 
-    updateCoords(e) {
-        const [x, y] = this.getCoordsFromOffset(e.offsetX, e.offsetY);
-
+    updateCoords(x, y) {
         if(this.state.coords.x === x && this.state.coords.y === y) return;
-
         this.setState({
             coords: {
                 x: x,
                 y: y,
             }
         });
-
-        this.refs.shadow.style.top = `${y * this.props.canvasSize.scale}px`;
-        this.refs.shadow.style.left = `${x * this.props.canvasSize.scale}px`;
     }
 
     getCoordsFromOffset(offsetX, offsetY) {
@@ -130,11 +124,14 @@ class Painter extends Component {
                         height: `${this.props.canvasSize.height}px`}}
                     onMouseEnter={() => { this.refs.shadow.style.display = 'Block' }}
                     onMouseLeave={() => { this.refs.shadow.style.display = 'none' }}
-                    onMouseMove={ this.checkShadow }>
+                    onMouseMove={ this.checkShadow }
+                    ref='wrapper'>
 
                     <canvas className='canvas' ref='mainCanvas'
                         data-tool={null}
-                        onMouseMove={(e) => { this.updateCoords(e.nativeEvent) }}
+                        onMouseMove={(e) => { 
+                            this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY)) 
+                        }}
                         onMouseUp={(e) => { this.props.addNextDataUrl(e.target.toDataURL(), this.props.currentFrame) }}>
                     </canvas>
 
@@ -144,10 +141,16 @@ class Painter extends Component {
                     </div>
 
                     <div className='painter__shadow'
-                        style={{width: `${this.props.canvasSize.scale}px`,
-                            height: `${this.props.canvasSize.scale}px`,
+                        style={{width: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
+                            height: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
+                            top: `${this.state.coords.y * this.props.canvasSize.scale}px`,
+                            left: `${this.state.coords.x * this.props.canvasSize.scale}px`,
                             display: 'none'}}
                         ref='shadow'
+                        onMouseMove={(e) => {
+                            const [x, y] = this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+                            if(x || y) this.updateCoords(this.state.coords.x + x, this.state.coords.y + y);
+                        }}
                     ></div>
                 </div>
             </div>

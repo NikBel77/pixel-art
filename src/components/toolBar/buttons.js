@@ -12,8 +12,12 @@ class ToolButton extends Component {
 class SizeButton extends Component {
     render() {
         return (
-        <div className='tool-bar__size-btn'>
-            <div className='tool-bar__size-mark' style={{width: this.props.scale, height: this.props.scale}}></div>
+        <div className='tool-bar__size-btn'
+            data-size={this.props.data}
+            onClick={(e) => this.props.setPenSize(+e.currentTarget.dataset.size)}>
+            <div className='tool-bar__size-mark'
+                style={{width: this.props.scale, height: this.props.scale}}>
+            </div>
         </div>
         )}
 }
