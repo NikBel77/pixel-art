@@ -1,9 +1,9 @@
-import pencil from './icons/pencil.svg'
-import bucket from './icons/bucket.svg'
-import roller from './icons/roller.svg'
-import dropper from './icons/dropper.svg'
-import eraser from './icons/eraser.svg'
-import brush from './icons/brush.svg'
+import pencil from '../../../assets/icons/pencil.svg'
+import bucket from '../../../assets/icons/bucket.svg'
+import roller from '../../../assets/icons/roller.svg'
+import dropper from '../../../assets/icons/dropper.svg'
+import eraser from '../../../assets/icons/eraser.svg'
+import brush from '../../../assets/icons/brush.svg'
 // import palette from './icons/palette.svg'
 
 const toolBtnList = [

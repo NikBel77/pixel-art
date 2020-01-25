@@ -37,6 +37,6 @@
 }
 
 .canvas {
-    background: url('./background/background.png');
+    background: url('../../../assets/background/background.png');
     box-sizing: content-box;
 }

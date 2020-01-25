@@ -1,4 +1,5 @@
-@font-face {font-family: "FR73 Pixel W00 Regular";
+@font-face {
+    font-family: "FR73 Pixel W00 Regular";
     src: url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.eot");
     src: url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.eot?#iefix") format("embedded-opentype"),
     url("./assets/fonts/7c2857cbd04acdf539eeb197ca8fd6c2.woff2") format("woff2"),
@@ -23,18 +24,6 @@
     --frame-color: #66bb6a;
     --frame-active-color: #ffb300;
     font-size: 15px;
-}
-
-.app {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 80px 160px 540px 1fr;
-    grid-template-rows: .3fr 1fr 1.3fr;
-    grid-template-areas: 
-    "head head head head"
-    "tool frame paint prev"
-    "tool frame paint side";
 }
 
 .side-bar {

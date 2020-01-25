@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './main.css'
+import './app.css'
 import FrameBar from './components/frameBar/FrameBar'
 import ToolBar from './components/toolBar/ToolBar'
 import SideBar from './components/sideBar/SideBar'
@@ -21,4 +21,4 @@ class App extends Component{
     )}
 }
 
-export default App;
+export default App

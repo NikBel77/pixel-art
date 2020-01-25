@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './header.css'
+import { Link } from 'react-router-dom';
 
 function getRandomRgbColor() {
     const r = Math.floor(Math.random()*256);
@@ -20,6 +21,9 @@ class Header extends Component {
                     <span style={{color: color1}}>Pixel </span>
                     <span style={{color: color2}}>Art</span>
                 </h1>
+                <Link to='/'>
+                    <button className='btn-small'>Back</button>
+                </Link>
             </div>
         )
     }

@@ -2,11 +2,11 @@
     grid-area: head;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .header__title {
-    font-size: 2rem;
+    font-size: 2.4rem;
     margin: 0;
     font-family: 'FR73 Pixel W00 Regular', sans-serif;
 }
