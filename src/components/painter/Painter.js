@@ -11,6 +11,8 @@ class Painter extends Component {
             coords: {
                 x: 0,
                 y: 0,
+                top: 0,
+                left: 0,
             },
         }
         this.activeTool = this.props.activeTool;
@@ -89,6 +91,10 @@ class Painter extends Component {
             coords: {
                 x: x,
                 y: y,
+                top: ((y * this.props.canvasSize.scale) -
+                    (Math.floor(this.props.canvasSize.penSize / 2) * this.props.canvasSize.scale)),
+                left: ((x * this.props.canvasSize.scale) -
+                    (Math.floor(this.props.canvasSize.penSize / 2) * this.props.canvasSize.scale)),
             }
         });
     }
@@ -110,7 +116,8 @@ class Painter extends Component {
         }
     }
 
-    checkShadow = () => {
+    checkShadow = (e) => {
+        if(e.nativeEvent.which) return;
         if (this.refs.shadow.style.display === 'block') return;
         this.refs.shadow.style.display = 'block';
     }
@@ -143,13 +150,16 @@ class Painter extends Component {
                     <div className='painter__shadow'
                         style={{width: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
                             height: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
-                            top: `${this.state.coords.y * this.props.canvasSize.scale}px`,
-                            left: `${this.state.coords.x * this.props.canvasSize.scale}px`,
+                            top: `${this.state.coords.top}px`,
+                            left: `${this.state.coords.left}px`,
                             display: 'none'}}
                         ref='shadow'
                         onMouseMove={(e) => {
-                            const [x, y] = this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-                            if(x || y) this.updateCoords(this.state.coords.x + x, this.state.coords.y + y);
+                            let [x, y] = this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+                            const middle = Math.floor(this.props.canvasSize.penSize / 2);
+                            if (x !== middle || y !== middle) {
+                                this.updateCoords(this.state.coords.x + (x - middle), this.state.coords.y + (y - middle));
+                            }
                         }}
                     ></div>
                 </div>
