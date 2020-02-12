@@ -22,10 +22,11 @@
     width: 144px;
     height: 144px;
     box-sizing: content-box;
-    margin: 1rem 0;
+    margin: 1rem auto;
     cursor: pointer;
 }
 .frame-bar__frame-active {
+    border: 5px solid var(--frame-color);
     border-color: var(--frame-active-color);
 }
 .frame-bar__frame-active .frame-bar__number {

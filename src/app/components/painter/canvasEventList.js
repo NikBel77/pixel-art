@@ -53,9 +53,10 @@ export default {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
             const scale = this.props.canvasSize.scale;
+            const penSize = this.props.canvasSize.penSize;
             const color = this.props.initialColor;
-            const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
-            let imgData = ctx.getImageData(x, y, scale, scale);
+            const [x, y] = [this.state.coords.left, this.state.coords.top];
+            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
             imgData = paintAllPixel(imgData, color);
             ctx.putImageData(imgData, x, y);
         },
@@ -64,11 +65,12 @@ export default {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
             const scale = this.props.canvasSize.scale;
+            const penSize = this.props.canvasSize.penSize;
             const color = this.props.initialColor;
-            const [x, y] = getPixelCoords(e.offsetX, e.offsetY, scale);
+            const [x, y] = [this.state.coords.left, this.state.coords.top];
             if (x === this.state.coords.x * scale && y / scale === this.state.coords.y * scale) return;
 
-            let imgData = ctx.getImageData(x, y, scale, scale);
+            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
             imgData = paintAllPixel(imgData, color);
             ctx.putImageData(imgData, x, y);
         }

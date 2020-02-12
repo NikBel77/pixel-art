@@ -4,21 +4,22 @@ import { ToolButton, SizeButton } from './buttons'
 import { toolBtnList, sizeBtnList } from './toolList'
 import { connect } from 'react-redux'
 
-// const activeClassBtn = 'tool-bar__tool-btn-active';
-// const activeClassSizeBtn = 'tool-bar__size-btn-active';
-
 class ToolBar extends Component {
     render() {
         return (
             <div className='tool-bar'>
                 <div className='tool-bar__size-switcher indigo z-depth-2'>
                     {sizeBtnList.map((btn, i) => {
-                        return <SizeButton key={i} scale={btn.scale} data={btn.data} setPenSize={this.props.setPenSize}/>
+                        return <SizeButton key={i} scale={btn.scale} data={btn.data}
+                            setPenSize={this.props.setPenSize}
+                            active={this.props.penSize === btn.data}/>
                     })}
                 </div>
                 <div className='tool-bar__panel indigo z-depth-2'>
                     {toolBtnList.map((btn, i) => {
-                        return <ToolButton key={i} icon={btn.icon} data={btn.name} changeTool={this.props.setCurrentTool} />
+                        return <ToolButton key={i} icon={btn.icon} data={btn.name}
+                            active={btn.name === this.props.activeTool}
+                            changeTool={this.props.setCurrentTool}/>
                     })}
                 </div>
                 <div className='tool-bar__color-switcher indigo z-depth-2'>
@@ -36,6 +37,8 @@ export default connect(
     (state) => ({
         mainColor: state.colorStore.mainColor,
         auxColor: state.colorStore.auxColor,
+        penSize: state.sizeStore.penSize,
+        activeTool: state.toolStore.activeTool,
     }),
     (dispatch) => ({
         setCurrentTool: (tool) => {

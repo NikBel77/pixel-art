@@ -17,10 +17,14 @@ class Painter extends Component {
         }
         this.activeTool = this.props.activeTool;
         this.activeFrame = this.props.currentFrame;
+        this.canvasEvents = {};
+        Object.keys(canvasEventList).forEach((event) => {
+            this.canvasEvents[event] = Object.assign({}, canvasEventList[event]);
+        });
     }
     
     componentDidMount() {
-        this.bindEvents(canvasEventList);
+        this.bindEvents(this.canvasEvents);
         this.refs.shadow.addEventListener('mousedown', (e) => {
             e.preventDefault(); 
             e.target.style.display = 'none';
@@ -32,8 +36,15 @@ class Painter extends Component {
         document.body.addEventListener('contextmenu', (e) => e.preventDefault());
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
+
+        if(this.props.bufferArray[this.props.currentFrame].dataURL) {
+            const img = new Image(this.props.canvasSize.width, this.props.canvasSize.height);
+            img.src = this.props.bufferArray[this.props.currentFrame].dataURL;
+            this.refs.mainCanvas.getContext('2d').drawImage(img, 0, 0);
+        }
+        
         this.toggleCanvasEvents(this.activeTool);
-        this.props.addNextDataUrl(this.refs.mainCanvas.toDataURL(), this.props.currentFrame);
+        // this.props.addNextDataUrl(this.refs.mainCanvas.toDataURL(), this.props.currentFrame);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -68,10 +79,9 @@ class Painter extends Component {
 
     toggleCanvasEvents(tool, isRemove = false) {
         if(!tool) return;
-        if(!canvasEventList[tool]) throw Error('no events in list: check canvasEventsList.js');
-
+        if(!this.canvasEvents[tool]) throw Error('no events in list: check canvasEventsList.js');
         const canvas = this.refs.mainCanvas;
-        const list = canvasEventList[tool];
+        const list = this.canvasEvents[tool];
         const events = Object.keys(list);
 
         if(isRemove) {
