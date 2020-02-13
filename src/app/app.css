@@ -3,7 +3,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: 80px 160px 540px 1fr;
-    grid-template-rows: .3fr 1fr 1.3fr;
+    grid-template-rows: .3fr 1fr 1fr;
     grid-template-areas: 
     "head head head head"
     "tool frame paint prev"

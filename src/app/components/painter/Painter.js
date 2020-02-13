@@ -144,7 +144,7 @@ class Painter extends Component {
                     onMouseMove={ this.checkShadow }
                     ref='wrapper'>
 
-                    <canvas className='canvas' ref='mainCanvas'
+                    <canvas className='painter__canvas' ref='mainCanvas'
                         data-tool={null}
                         onMouseMove={(e) => { 
                             this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY)) 

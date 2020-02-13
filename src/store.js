@@ -23,6 +23,7 @@ const initialSizeStore = {
     height: 480,
     scale: 8,
     penSize: 1, /* correct pen size must be numbers: 1, 2, 3 or 4 */
+    previewCanvasSize: 184,
 }
 
 function sizeStore(state = initialSizeStore, action) {

@@ -30,7 +30,3 @@
 .side-bar {
     grid-area: side;
 }
-
-.preview {
-    grid-area: prev;
-}

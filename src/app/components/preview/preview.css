@@ -1,0 +1,45 @@
+.preview {
+    grid-area: prev;
+}
+
+.preview__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview__screen {
+    border: 3px solid var(--secondary-color);
+    overflow: hidden;
+    box-sizing: content-box;
+    margin: 7px 0;
+}
+
+.preview__canvas {
+    background: url('../../../assets/background/background.png');
+    box-sizing: content-box;
+}
+
+.preview__fps-controller {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--main-color);
+    border-radius: 7px;
+    padding: 3px 5px;
+}
+
+.preview__fps-view {
+    color: var(--frame-active-color);
+    font-size: 1rem;
+    width: 50px;
+}
+
+#fps-controller {
+    width: 70%;
+}
+
+/* .preview__shot {
+    background-position: center;
+} */
