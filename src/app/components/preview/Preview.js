@@ -22,6 +22,10 @@ class Preview extends Component {
         this.animationPlayer = this.startAnimation(1000 / this.state.fpsValue);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.animationPlayer);
+    }
+
     startAnimation(dalay) {
         return setInterval(this.changeFrame.bind(this), dalay);
     }
@@ -29,7 +33,7 @@ class Preview extends Component {
     changeFrame() {
         const img = new Image(this.props.previewCanvasSize, this.props.previewCanvasSize);
         img.src = this.props.bufferArray[this.frameCounter].dataURL;
-        const ctx = this.refs.previewCanvas.getContext('2d')
+        const ctx = this.refs.previewCanvas.getContext('2d');
         ctx.clearRect(0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
         ctx.drawImage(img, 0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
 

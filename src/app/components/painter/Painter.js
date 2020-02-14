@@ -190,10 +190,10 @@ export default connect(
     }),
     (dispatch) => ({
         saveImageData: (imageData, number) => {
-            dispatch({ type: 'CHANGE_IMAGE_DATA', imageData, number })
+            dispatch({ type: 'CHANGE_IMAGE_DATA', imageData, number });
         },
         addNextDataUrl: (dataURL, number) => {
-          dispatch({ type: 'CHANGE_DATA_URL', dataURL, number });
+            dispatch({ type: 'CHANGE_DATA_URL', dataURL, number });
         }
     })
 )(Painter);

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import './header.css'
 import { Link } from 'react-router-dom';
-
-function getRandomRgbColor() {
-    const r = Math.floor(Math.random()*256);
-    const g = Math.floor(Math.random()*256);
-    const b = Math.floor(Math.random()*256);
-    return `rgb(${r}, ${g}, ${b})`;
-}
+import { getRandomRgbColor } from '../../../service'
 
 const color1 = getRandomRgbColor();
 const color2 = getRandomRgbColor();
