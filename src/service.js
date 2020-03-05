@@ -14,4 +14,12 @@ function getRandomScale() {
     return [scale, scale];
 }
 
-export { getRandomRgbColor, getRandomCoords, getRandomScale };
+function RgbToRgba(rgb) {
+    if(!rgb || typeof rgb !== 'string') throw Error('wrong rgb format');
+    if(rgb.includes('rgba')) return rgb;
+    if(!rgb.includes('rgb')) throw Error('format dose not contains "rgb" symbols');
+    const color = rgb.slice(4, -1).split(',').map((num) => +num);
+    return `rgba(${color.join()},255)`
+}
+
+export { getRandomRgbColor, getRandomCoords, getRandomScale, RgbToRgba };

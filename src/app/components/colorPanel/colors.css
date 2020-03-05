@@ -1,0 +1,54 @@
+.color-panel {
+    grid-area: color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-panel__wrapper {
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    padding: .2rem .1rem;
+    border-radius: .2rem;
+    min-width: 60px;
+}
+
+.color-panel__btn {
+    position: relative;
+    width: 21px;
+    height: 21px;
+    margin: .2rem .1rem;
+    border: 1px solid var(--button-bkg-color);
+    border-radius: .2rem;
+    cursor: pointer;
+}
+
+.color-panel__btn:hover {
+    border-color: var(--button-active-color);
+}
+
+.color-panel__btn:hover .color-panel__hint {
+    display: block;
+}
+
+.color-panel__btn:nth-child(even) .color-panel__hint {
+    left: 170%;
+}
+
+.color-panel__btn:nth-child(odd) .color-panel__hint {
+    right: 170%;
+}
+
+.color-panel__hint {
+    display: none;
+    position: absolute;
+    font-size: .8rem;
+    bottom: 0;
+    padding: .1rem .2rem;
+    border-radius: .2rem;
+    color: white;
+    background-color: var(--mark-color);
+}

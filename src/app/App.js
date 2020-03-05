@@ -6,6 +6,7 @@ import SideBar from './components/sideBar/SideBar'
 import Header from './components/header/Header'
 import Painter from './components/painter/Painter'
 import Preview from './components/preview/Preview'
+import ColorPanel from './components/colorPanel/colorPanel'
 
 class App extends Component{
   render() {
@@ -17,6 +18,7 @@ class App extends Component{
       <FrameBar />
       <Preview />
       <SideBar />
+      <ColorPanel />
     </div>
     )}
 }

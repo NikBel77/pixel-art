@@ -35,7 +35,7 @@ export default connect(
             dispatch({ type: 'CHANGE_CURRENT_FRAME', number });
         },
         addFrame: () => {
-          dispatch({ type: 'ADD_FRAME' });
+            dispatch({ type: 'ADD_FRAME' });
         }
     })
 )(FrameBar)

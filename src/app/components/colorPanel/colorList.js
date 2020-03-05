@@ -1,0 +1,16 @@
+export default [
+    { color: '#f44336', description: 'red'},
+    { color: '#9c27b0', description: 'purple'},
+    { color: '#2196f3', description: 'blue'},
+    { color: '#009688', description: 'teal'},
+    { color: '#cddc39', description: 'lime'},
+    { color: '#4caf50', description: 'green'},
+    { color: '#795548', description: 'brown'},
+    { color: '#ff9800', description: 'orange'},
+    { color: '#ffeb3b', description: 'yellow'},
+    { color: '#ffc107', description: 'amber'},
+    { color: '#3f51b5', description: 'indigo'},
+    { color: '#9e9e9e', description: 'grey'},
+    { color: '#000000', description: 'black'},
+    { color: '#ffffff', description: 'white'},
+]

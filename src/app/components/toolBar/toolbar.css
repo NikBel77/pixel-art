@@ -85,14 +85,15 @@
     cursor: pointer;
 }
 
-.tool-bar__color-switcher:hover {
-    background-color: var(--secondary-color) !important;
-}
-
 .tool-bar__color-holder {
     position: absolute;
     width: 25px;
     height: 25px;
     margin: .4rem 0;
     border-radius: .2rem;
+    border: 1px solid var(--button-bkg-color);
+}
+
+.tool-bar__color-holder:hover {
+    border-color: var(--button-active-color) !important;
 }

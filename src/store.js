@@ -11,7 +11,8 @@ const initialColorsState = {
 
 function colorStore(state = initialColorsState, action) {
     switch(action.type) {
-        case 'REWRITE_MAIN_COLOR': return state;
+        case 'REWRITE_MAIN_COLOR': return Object.assign({}, state, { mainColor: action.color });
+        case 'REWRITE_AUX_COLOR': return Object.assign({}, state, { auxColor: action.color });
         default: return state;
     }
 }
