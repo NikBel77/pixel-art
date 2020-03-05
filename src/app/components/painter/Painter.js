@@ -44,7 +44,6 @@ class Painter extends Component {
         }
         
         this.toggleCanvasEvents(this.activeTool);
-        // this.props.addNextDataUrl(this.refs.mainCanvas.toDataURL(), this.props.currentFrame);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -194,6 +193,12 @@ export default connect(
         },
         addNextDataUrl: (dataURL, number) => {
             dispatch({ type: 'CHANGE_DATA_URL', dataURL, number });
+        },
+        setMainColor: (color) => {
+            dispatch({ type: 'REWRITE_MAIN_COLOR', color });
+        },
+        setAuxColor: (color) => {
+            dispatch({ type: 'REWRITE_AUX_COLOR', color });
         }
     })
 )(Painter);

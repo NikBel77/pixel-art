@@ -1,5 +1,6 @@
 .preview {
     grid-area: prev;
+    padding: 1rem;
 }
 
 .preview__inner {

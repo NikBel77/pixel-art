@@ -1,4 +1,4 @@
-import { paintAllPixel, getPixelCoords }  from './drawing'
+import { paintAllPixel, fillSame, fillRegion }  from './drawing'
 
 export default {
     pen: {
@@ -30,6 +30,13 @@ export default {
     fill: {
         mousedown: function(e) {
             e.preventDefault();
+            const ctx = e.target.getContext('2d');
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
+            const targetColor = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+            
+            let imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+            imgData = fillRegion.call(this, imgData, color, targetColor, { x: e.offsetX, y: e.offsetY });
+            ctx.putImageData(imgData, 0, 0);
         }
     },
     fillAll: {
@@ -46,6 +53,13 @@ export default {
     fillAllSame: {
         mousedown: function(e) {
             e.preventDefault();
+            const ctx = e.target.getContext('2d');
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
+            const targetColor = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+
+            let imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+            imgData = fillSame(imgData, color, targetColor);
+            ctx.putImageData(imgData, 0, 0);
         }
     },
     eraser: {
@@ -78,6 +92,16 @@ export default {
     dropper: {
         mousedown: function(e) {
             e.preventDefault();
+            if(e.which === 1) {
+                let color = e.target.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
+                color = `rgba(${color.join(',')})`;
+                this.props.setMainColor(color);
+            }
+            if(e.which === 3) {
+                let color = e.target.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
+                color = `rgba(${color.join(',')})`;
+                this.props.setAuxColor(color);
+            }
         }
     },
 }

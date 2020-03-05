@@ -42,9 +42,7 @@ class ColorPanel extends Component {
 }
 
 export default connect(
-    (state) => ({
-
-    }),
+    () => ({}),
     (dispatch) => ({
         setMainColor: (color) => {
             dispatch({ type: 'REWRITE_MAIN_COLOR', color });
