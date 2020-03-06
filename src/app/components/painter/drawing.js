@@ -16,7 +16,6 @@ function drawPixel(imgData, pixelPos, color) {
     ];
 }
 
-
 function paintAllPixel(imgData, colorRgba) {
     const color = extractArrayFromRgba(colorRgba);
 
@@ -97,4 +96,4 @@ function fillRegion(imgData, colorRgba, targetColor, initialCoords) {
     return imgData;
 }
 
-export { paintAllPixel, fillSame, fillRegion } 
+export { paintAllPixel, fillSame, fillRegion, extractArrayFromRgba } 

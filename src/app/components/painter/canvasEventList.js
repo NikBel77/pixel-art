@@ -1,30 +1,29 @@
 import { paintAllPixel, fillSame, fillRegion }  from './drawing'
+import PencilDrawing from './pencilDrawing'
+
+const penDrawing = new PencilDrawing();
 
 export default {
     pen: {
         mousedown: function(e) {
             e.preventDefault();
-            const ctx = e.target.getContext('2d');
-            const scale = this.props.canvasSize.scale;
-            const penSize = this.props.canvasSize.penSize;
-            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
-            const [x, y] = [this.state.coords.left, this.state.coords.top];
-            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
-            imgData = paintAllPixel(imgData, color);
-            ctx.putImageData(imgData, x, y);
+            // const ctx = e.target.getContext('2d');
+            // const scale = this.props.canvasSize.scale;
+            // const penSize = this.props.canvasSize.penSize;
+            // const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
+            const [x, y] = [this.state.coords.x, this.state.coords.y];
+            penDrawing.setLastCoords(x, y);
         },
         mousemove: function(e) {
             if(e.which === 0) return;
             e.preventDefault();
             const ctx = e.target.getContext('2d');
-            const scale = this.props.canvasSize.scale;
-            const penSize = this.props.canvasSize.penSize;
+            // const scale = this.props.canvasSize.scale;
+            // const penSize = this.props.canvasSize.penSize;
             const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
-            const [x, y] = [this.state.coords.left, this.state.coords.top];
+            const [x, y] = [this.state.coords.x, this.state.coords.y];
 
-            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
-            imgData = paintAllPixel(imgData, color);
-            ctx.putImageData(imgData, x, y);
+            penDrawing.drawing(color, {x, y}, ctx);
         }
     }, 
     fill: {
