@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import './landing.css'
-import { Link } from 'react-router-dom';
-import { getRandomRgbColor, getRandomCoords, getRandomScale } from '../service'
+import { getRandomRgbColor, getRandomCoords, getRandomScale } from '../../../service'
 
 let timer = null;
 const dalay = 1000;
-const scale = 10;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -31,9 +29,10 @@ class Landing extends Component {
             <div className='landing grey lighten-2'>
                 <div className='landing__inner'>
                     <h1 className='landing__header'>Pixel Art</h1>
-                    <Link to='/app'>
-                        <button className='btn-large'>Start</button>
-                    </Link>
+                    <button className='btn-large'
+                        onClick={() => this.props.hideLanding()}>
+                            Start
+                    </button>
                 </div>
                 <canvas className='landing__canvas' ref='landingCanvas'></canvas>
             </div>

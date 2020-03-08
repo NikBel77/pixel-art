@@ -13,7 +13,7 @@ class FrameBar extends Component {
                             className={i === this.props.currentFrame
                                 ? 'frame-bar__frame frame-bar__frame-active' : 'frame-bar__frame'}
                             onClick={() => { this.props.setActiveFrame(i) }}>
-                            <img className='frame-bar__img' src={data.dataURL}></img>
+                            <img className='frame-bar__img' src={data.dataURL} alt=''></img>
                             <div className='frame-bar__number'>{i + 1}</div>
                         </div>
                         )

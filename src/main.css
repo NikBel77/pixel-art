@@ -26,7 +26,3 @@
     --frame-active-color: #ffb300;
     font-size: 15px;
 }
-
-.side-bar {
-    grid-area: side;
-}
