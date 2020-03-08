@@ -31,10 +31,13 @@ class Preview extends Component {
     }
 
     changeFrame() {
-        const img = new Image(this.props.previewCanvasSize, this.props.previewCanvasSize);
-        img.src = this.props.bufferArray[this.frameCounter].dataURL;
         const ctx = this.refs.previewCanvas.getContext('2d');
         ctx.clearRect(0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
+        const img = new Image(this.props.previewCanvasSize, this.props.previewCanvasSize);
+        if(this.props.bufferArray[this.frameCounter].dataURL) {
+            img.src = this.props.bufferArray[this.frameCounter].dataURL;
+        };
+
         ctx.drawImage(img, 0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
 
         if(this.frameCounter >= this.props.bufferArray.length - 1) this.frameCounter = 0;
