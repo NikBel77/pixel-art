@@ -7,18 +7,18 @@ import { RgbToRgba } from '../../../service'
 class ColorBtn extends Component {
     render() {
         return (
-            <div onMouseDown={ (e) => {
-                    if(e.nativeEvent.which === 1) {
-                        this.props.setMainColor(RgbToRgba(e.target.style.backgroundColor));
-                    }
-                    else if (e.nativeEvent.which === 3) {
-                        this.props.setAuxColor(RgbToRgba(e.target.style.backgroundColor));
-                    }
-                }}
+            <div onMouseDown={(e) => {
+                if (e.nativeEvent.which === 1) {
+                    this.props.setMainColor(RgbToRgba(e.target.style.backgroundColor));
+                }
+                else if (e.nativeEvent.which === 3) {
+                    this.props.setAuxColor(RgbToRgba(e.target.style.backgroundColor));
+                }
+            }}
                 className='color-panel__btn'
                 style={{ backgroundColor: this.props.color }}
             >
-                <div className='color-panel__hint'>{ this.props.hint }</div>
+                <div className='color-panel__hint'>{this.props.hint}</div>
             </div>
         )
     }
@@ -27,15 +27,17 @@ class ColorBtn extends Component {
 class ColorPanel extends Component {
     render() {
         return (
-            <div className='color-panel__wrapper indigo z-depth-2'>
-                {ColorList.map((btn, i) => {
-                    return (
-                        <ColorBtn key={i} color={btn.color}
-                            hint={btn.description}
-                            setMainColor={this.props.setMainColor}
-                            setAuxColor={this.props.setAuxColor}/>
-                    )
-                })}
+            <div className='color-panel'>
+                <div className='color-panel__wrapper indigo z-depth-2'>
+                    {ColorList.map((btn, i) => {
+                        return (
+                            <ColorBtn key={i} color={btn.color}
+                                hint={btn.description}
+                                setMainColor={this.props.setMainColor}
+                                setAuxColor={this.props.setAuxColor} />
+                        )
+                    })}
+                </div>
             </div>
         )
     }
