@@ -22,11 +22,11 @@ class Painter extends Component {
             this.canvasEvents[event] = Object.assign({}, canvasEventList[event]);
         });
     }
-    
+
     componentDidMount() {
         this.bindEvents(this.canvasEvents);
         this.refs.shadow.addEventListener('mousedown', (e) => {
-            e.preventDefault(); 
+            e.preventDefault();
             e.target.style.display = 'none';
             this.refs.mainCanvas.dispatchEvent(new MouseEvent('mousedown', e));
         });
@@ -37,25 +37,25 @@ class Painter extends Component {
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
 
-        if(this.props.bufferArray[this.props.currentFrame].dataURL) {
+        if (this.props.bufferArray[this.props.currentFrame].dataURL) {
             const img = new Image(this.props.canvasSize.width, this.props.canvasSize.height);
             img.src = this.props.bufferArray[this.props.currentFrame].dataURL;
             this.refs.mainCanvas.getContext('2d').drawImage(img, 0, 0);
         }
-        
+
         this.toggleCanvasEvents(this.activeTool);
     }
 
     shouldComponentUpdate(nextProps) {
-        if(this.activeFrame !== nextProps.currentFrame) {
-            const ctx = this.refs.mainCanvas.getContext('2d')
-            const imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+        // if (this.activeFrame !== nextProps.currentFrame) {
+        //     const ctx = this.refs.mainCanvas.getContext('2d')
+        //     const imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
 
-            this.props.saveImageData(imgData, this.activeFrame);
-            ctx.putImageData(this.props.bufferArray[nextProps.currentFrame].imageData, 0, 0);
-            this.activeFrame = nextProps.currentFrame;
-        }
-        if(nextProps.activeTool !== this.activeTool) {
+        //     this.props.saveImageData(imgData, this.activeFrame);
+        //     ctx.putImageData(this.props.bufferArray[nextProps.currentFrame].imageData, 0, 0);
+        //     this.activeFrame = nextProps.currentFrame;
+        // }
+        if (nextProps.activeTool !== this.activeTool) {
             this.toggleCanvasEvents(this.activeTool, true);
             this.toggleCanvasEvents(nextProps.activeTool);
             this.activeTool = nextProps.activeTool;
@@ -64,7 +64,7 @@ class Painter extends Component {
     }
 
     bindEvents(eventList) {
-        if(typeof eventList !== 'object') throw Error('event list must be an object');
+        if (typeof eventList !== 'object') throw Error('event list must be an object');
 
         Object.keys(eventList).forEach((tool) => {
             if (typeof eventList[tool] !== 'object') throw Error('every item in event list must be an object');
@@ -77,13 +77,13 @@ class Painter extends Component {
     }
 
     toggleCanvasEvents(tool, isRemove = false) {
-        if(!tool) return;
-        if(!this.canvasEvents[tool]) throw Error('no events in list: check canvasEventsList.js');
+        if (!tool) return;
+        if (!this.canvasEvents[tool]) throw Error('no events in list: check canvasEventsList.js');
         const canvas = this.refs.mainCanvas;
         const list = this.canvasEvents[tool];
         const events = Object.keys(list);
 
-        if(isRemove) {
+        if (isRemove) {
             events.forEach(event => {
                 canvas.removeEventListener(event, list[event]);
             });
@@ -95,7 +95,7 @@ class Painter extends Component {
     }
 
     updateCoords(x, y) {
-        if(this.state.coords.x === x && this.state.coords.y === y) return;
+        if (this.state.coords.x === x && this.state.coords.y === y) return;
         this.setState({
             coords: {
                 x: x,
@@ -115,7 +115,7 @@ class Painter extends Component {
     }
 
     toggleCoordsSide(elem) {
-        if(elem.classList.contains('painter__coords-rigth-side')) {
+        if (elem.classList.contains('painter__coords-rigth-side')) {
             elem.classList.remove('painter__coords-rigth-side');
             elem.classList.add('painter__coords-left-side');
         }
@@ -126,7 +126,7 @@ class Painter extends Component {
     }
 
     checkShadow = (e) => {
-        if(e.nativeEvent.which) return;
+        if (e.nativeEvent.which) return;
         if (this.refs.shadow.style.display === 'block') return;
         this.refs.shadow.style.display = 'block';
     }
@@ -136,19 +136,26 @@ class Painter extends Component {
             <div className='painter'>
 
                 <div className='painter__inner z-depth-4'
-                    style={{width: `${this.props.canvasSize.width}px`,
-                        height: `${this.props.canvasSize.height}px`}}
+                    style={{
+                        width: `${this.props.canvasSize.width}px`,
+                        height: `${this.props.canvasSize.height}px`
+                    }}
                     onMouseEnter={() => { this.refs.shadow.style.display = 'Block' }}
                     onMouseLeave={() => { this.refs.shadow.style.display = 'none' }}
-                    onMouseMove={ this.checkShadow }
+                    onMouseMove={this.checkShadow}
                     ref='wrapper'>
 
                     <canvas className='painter__canvas' ref='mainCanvas'
                         data-tool={null}
-                        onMouseMove={(e) => { 
-                            this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY)) 
+                        onMouseMove={(e) => {
+                            this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY))
                         }}
-                        onMouseUp={(e) => { this.props.addNextDataUrl(e.target.toDataURL(), this.props.currentFrame) }}>
+                        onMouseUp={(e) => {
+                            const ctx = this.refs.mainCanvas.getContext('2d')
+                            const imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+                            this.props.addNextDataUrl(e.target.toDataURL(), this.props.currentFrame);
+                            this.props.saveImageData(imgData, this.activeFrame);
+                        }}>
                     </canvas>
 
                     <div className='painter__coords painter__coords-rigth-side'
@@ -157,11 +164,13 @@ class Painter extends Component {
                     </div>
 
                     <div className='painter__shadow'
-                        style={{width: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
+                        style={{
+                            width: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
                             height: `${this.props.canvasSize.scale * this.props.canvasSize.penSize}px`,
                             top: `${this.state.coords.top}px`,
                             left: `${this.state.coords.left}px`,
-                            display: 'none'}}
+                            display: 'none'
+                        }}
                         ref='shadow'
                         onMouseMove={(e) => {
                             let [x, y] = this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY);

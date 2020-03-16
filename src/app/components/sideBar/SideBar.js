@@ -2,20 +2,24 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './side.css'
+import UPNG from 'upng-js'
+import download from 'downloadjs'
 
 class SideBar extends Component {
-    download() {
-        const el = document.createElement('a');
-        if(!this.props.bufferArray[this.props.currentFrame].dataURL) return
-        el.setAttribute('href', this.props.bufferArray[this.props.currentFrame].dataURL);
-        el.setAttribute('download', 'first.png');
-      
-        el.style.display = 'none';
-        document.body.appendChild(el);
-      
-        el.click();
-      
-        document.body.removeChild(el);
+    downloadAPNG() {
+        const buffer = this.props.bufferArray.map((frame) => frame.imageData.data.buffer);
+        const [width, height] = [this.props.canvasSize.width, this.props.canvasSize.height];
+        const fps = 10
+        const delays = new Array(buffer.length).fill(1000 / fps);
+        const cnum = 0;
+        const apng = UPNG.encode(buffer, width, height, cnum, delays);
+
+        download(apng, 'simple.apng', 'apng');
+    }
+    downloadPNG() {
+        if (!this.props.bufferArray[this.props.currentFrame].dataURL) return
+        const png = this.props.bufferArray[this.props.currentFrame].dataURL;
+        download(png, 'simple.png', 'png');
     }
 
     render() {
@@ -24,8 +28,11 @@ class SideBar extends Component {
                 <Link to='/' className='btn btn-small'>Back</Link>
                 <div className='side-bar__settings'>
                     <button className='btn-small'
-                        onClick={ this.download.bind(this) }
+                        onClick={this.downloadPNG.bind(this)}
                     >download as png</button>
+                    <button className='btn-small'
+                        onClick={this.downloadAPNG.bind(this)}
+                    >download as apng</button>
                 </div>
             </div>
         )
@@ -36,6 +43,7 @@ export default connect(
     (state) => ({
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
+        canvasSize: state.sizeStore,
     }),
     () => ({})
 )(SideBar)
