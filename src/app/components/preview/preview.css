@@ -12,6 +12,7 @@
 
 .preview__screen {
     border: 3px solid var(--secondary-color);
+    border-radius: .2rem;
     overflow: hidden;
     box-sizing: content-box;
     margin: 7px 0;

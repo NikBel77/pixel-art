@@ -49,11 +49,11 @@ class Preview extends Component {
         return (
             <div className='preview'>
                 <div className='preview__inner'>
-                    <div className='preview__screen'
+                    <div className='preview__screen z-depth-2'
                         style={{ width: this.props.previewCanvasSize, height: this.props.previewCanvasSize }}>
                         <canvas className='preview__canvas' ref='previewCanvas' id='preview-canvas'></canvas>
                     </div>
-                    <div className='preview__fps-controller'>
+                    <div className='preview__fps-controller z-depth-2'>
                         <input type='range' id='fps-controller'
                             defaultValue={this.props.fps}
                             max={this.state.maxFps}
