@@ -24,5 +24,6 @@
     --secondary-color: #009688;
     --frame-color: #66bb6a;
     --frame-active-color: #ffb300;
+    --frame-aux-color: #757575;
     font-size: 15px;
 }

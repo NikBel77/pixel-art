@@ -18,6 +18,11 @@ class Preview extends Component {
     componentDidMount() {
         this.refs.previewCanvas.width = this.props.previewCanvasSize;
         this.refs.previewCanvas.height = this.props.previewCanvasSize;
+        this.refs.previewCanvas.addEventListener('refrash', () => {
+            clearInterval(this.animationPlayer);
+            this.frameCounter = 0;
+            this.animationPlayer = this.startAnimation(1000 / this.props.fps);
+        });
         this.animationPlayer = this.startAnimation(1000 / this.props.fps);
     }
 
@@ -46,7 +51,7 @@ class Preview extends Component {
                 <div className='preview__inner'>
                     <div className='preview__screen'
                         style={{ width: this.props.previewCanvasSize, height: this.props.previewCanvasSize }}>
-                        <canvas className='preview__canvas' ref='previewCanvas'></canvas>
+                        <canvas className='preview__canvas' ref='previewCanvas' id='preview-canvas'></canvas>
                     </div>
                     <div className='preview__fps-controller'>
                         <input type='range' id='fps-controller'

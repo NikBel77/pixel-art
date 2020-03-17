@@ -170,7 +170,7 @@ class Painter extends Component {
 
                     <div className='painter__coords painter__coords-rigth-side'
                         ref='coordsScreen' onMouseEnter={(e) => { this.toggleCoordsSide(e.target) }}>
-                        X : {this.state.coords.x} Y : {this.state.coords.y} Tool : {this.props.activeTool}
+                        X : {this.state.coords.x} Y : {this.state.coords.y}
                     </div>
 
                     <div className='painter__shadow'

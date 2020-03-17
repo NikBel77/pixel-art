@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './frame.css'
 import { connect } from 'react-redux'
 
+const previewCnavasId = 'preview-canvas';
+
 class FrameBar extends Component {
     render() {
         return (
@@ -10,11 +12,35 @@ class FrameBar extends Component {
                     {this.props.bufferArray.map((data, i) => {
                         return (
                         <div key={i}
+
                             className={i === this.props.currentFrame
                                 ? 'frame-bar__frame frame-bar__frame-active' : 'frame-bar__frame'}
                             onClick={() => { this.props.setActiveFrame(i) }}>
                             <img className='frame-bar__img' src={data.dataURL} alt=''></img>
                             <div className='frame-bar__number'>{i + 1}</div>
+                            <div className='frame-bar__delete'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if(this.props.currentFrame === i
+                                        || this.props.bufferArray.length - 1 === this.props.currentFrame) {
+                                        this.props.setActiveFrame(0);
+                                    }
+                                    document.getElementById(previewCnavasId)
+                                        .dispatchEvent(new CustomEvent('refrash'));
+                                    this.props.deleteFrame(i);
+                                    this.forceUpdate();
+                                }}
+                            ></div>
+                            <div className='frame-bar__copy'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    document.getElementById(previewCnavasId)
+                                        .dispatchEvent(new CustomEvent('refrash'));
+                                    this.props.copyFrame(i)
+                                    this.forceUpdate();
+                                }}
+                            ></div>
+
                         </div>
                         )
                     })}
@@ -36,6 +62,12 @@ export default connect(
         },
         addFrame: () => {
             dispatch({ type: 'ADD_FRAME' });
+        },
+        deleteFrame: (number) => {
+            dispatch({ type: 'DELETE_FRAME', number });
+        },
+        copyFrame: (number) => {
+            dispatch({ type: 'COPY_FRAME', number });
         }
     })
 )(FrameBar)

@@ -65,22 +65,31 @@ const initialImageDataState = [{ imageData: createCleanImageData(), dataURL: nul
 
 function imageDataStore(state = initialImageDataState, action) {
     switch(action.type) {
-        case 'ADD_FRAME': return [...state, { imageData: createCleanImageData(), dataURL: null }];
+        case 'ADD_FRAME': return [...state, { imageData: createCleanImageData(), dataURL: null }]
         case 'CHANGE_DATA_URL': return state.map((data, i) => {
             if(i === action.number) {
-                return { imageData: data.imageData, dataURL: action.dataURL };
+                return { imageData: data.imageData, dataURL: action.dataURL }
             }
             return data;
         });
         case 'CHANGE_IMAGE_DATA': return state.map((data, i) => {
             if(i === action.number) {
-                return { imageData: action.imageData, dataURL: data.dataURL };
+                return { imageData: action.imageData, dataURL: data.dataURL }
             }
             return data;
         });
         case 'SET_BUFFER_ARRAY': return action.buffer.map((data) => {
             return { imageData: data.imageData, dataURL: data.dataURL }
-        })
+        });
+        case 'DELETE_FRAME': {
+            if(state.length === 1) return state
+            state.splice(action.number, 1);
+            return state
+        }
+        case 'COPY_FRAME': {
+            state.splice(action.number, 0, state[action.number]);
+            return state
+        }
         default: return state;
     }
 }

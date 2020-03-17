@@ -39,7 +39,7 @@ class SideBar extends Component {
         const cnum = 0;
         const apng = UPNG.encode(buffer, width, height, cnum, delays);
 
-        download(apng, `${filename}.png`, 'apng');
+        download(apng, `${filename}.apng`, 'apng');
     }
 
     downloadPNG(filename) {
@@ -52,13 +52,16 @@ class SideBar extends Component {
         const promiseArray = this.handleFiles(this.refs.in.files);
         const files = await Promise.all(promiseArray);
         const buffer = files.map((img) => {
-            return this.extractImageData(img)
+            return this.extractImageData(img);
         });
+        if (!buffer || !buffer.length) return
+
         this.props.setBuffer(buffer);
         document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
     }
 
     extractImageData(img) {
+        if (!img.src) return
         const canvas = document.createElement('canvas');
         const [width, height, scale] = [
             this.props.canvasSize.width, this.props.canvasSize.height, this.props.canvasSize.scale
@@ -99,17 +102,23 @@ class SideBar extends Component {
     render() {
         return (
             <div className='side-bar'>
-                <Link to='/' className='btn'>Back</Link>
+
                 <div className='side-bar__settings'>
-                    <button data-target={modalPngId} className="btn modal-trigger">save as png</button>
-                    <button data-target={modalApngId} className="btn modal-trigger">save as apng</button>
-                </div>
-                <div>
-                    <input ref='in' type='file' style={{ display: 'none' }}
-                        id='uploader' onChange={this.upload.bind(this)}
-                        multiple accept="image/*"
-                    />
-                    <label htmlFor='uploader' className='btn'>upload file</label>
+                    <Link to='/' className='btn side-bar__settings-btn'>Back</Link>
+                    <button data-target={modalPngId}
+                        className="btn modal-trigger side-bar__settings-btn"
+                    >save as png</button>
+                    <button data-target={modalApngId}
+                        className="btn modal-trigger side-bar__settings-btn"
+                    >save as apng</button>
+                    <div className='side-bar__settings-btn'>
+                        <input ref='in' type='file' style={{ display: 'none' }}
+                            id='uploader' onChange={this.upload.bind(this)}
+                            multiple accept="image/*"
+                        />
+                        <label htmlFor='uploader' className='btn'>upload file</label>
+                    </div>
+                    
                 </div>
                 <Modal modalId={modalPngId} inputId='input-1' format='.png'
                     save={this.downloadPNG.bind(this)}
