@@ -7,12 +7,12 @@ import brush from '../../../assets/icons/brush.svg'
 // import palette from './icons/palette.svg'
 
 const toolBtnList = [
-    { name: 'pen', icon: pencil },
-    { name: 'fill', icon: bucket },
-    { name: 'fillAll', icon: roller },
-    { name: 'fillAllSame', icon: brush },
-    { name: 'eraser', icon: eraser },
-    { name: 'dropper', icon: dropper },
+    { name: 'pen', icon: pencil, hint: 'pen'},
+    { name: 'fill', icon: bucket, hint: 'fill'},
+    { name: 'fillAll', icon: roller, hint: 'fill all pixels'},
+    { name: 'fillAllSame', icon: brush, hint: 'fill all same color'},
+    { name: 'eraser', icon: eraser, hint: 'eraser'},
+    { name: 'dropper', icon: dropper, hint: 'dropper'},
 ]
 
 const sizeBtnList = [

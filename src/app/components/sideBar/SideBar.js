@@ -9,6 +9,7 @@ import { convertImgData } from '../../../service'
 const modalApngId = 'modal-apng';
 const modalPngId = 'modal-png';
 const canvasId = 'main-canvas';
+const previewCnavasId = 'preview-canvas';
 
 function Modal(props) {
     return (
@@ -55,9 +56,11 @@ class SideBar extends Component {
             return this.extractImageData(img);
         });
         if (!buffer || !buffer.length) return
-
+        this.props.setActiveFrame(0);
         this.props.setBuffer(buffer);
+        
         document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
+        document.getElementById(previewCnavasId).dispatchEvent(new Event('refrash'));
     }
 
     extractImageData(img) {
@@ -116,7 +119,7 @@ class SideBar extends Component {
                             id='uploader' onChange={this.upload.bind(this)}
                             multiple accept="image/*"
                         />
-                        <label htmlFor='uploader' className='btn'>upload file</label>
+                        <label htmlFor='uploader' className='btn'>upload files</label>
                     </div>
                     
                 </div>
@@ -141,6 +144,9 @@ export default connect(
     (dispatch) => ({
         setBuffer: (buffer) => {
             dispatch({ type: 'SET_BUFFER_ARRAY', buffer })
-        }
+        },
+        setActiveFrame: (number) => {
+            dispatch({ type: 'CHANGE_CURRENT_FRAME', number });
+        },
     })
 )(SideBar)

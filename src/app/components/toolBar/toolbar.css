@@ -19,6 +19,7 @@
 }
 
 .tool-bar__tool-btn {
+    position: relative;
     width: 30px;
     height: 30px;
     margin: .4rem 0;
@@ -32,8 +33,26 @@
     background-color: var(--button-bkg-fade-color);
 }
 
+.tool-bar__tool-btn:hover .tool-bar__hint {
+    display: block;
+}
+
 .tool-bar__tool-btn-active {
     background-color: var(--secondary-color) !important;
+}
+
+.tool-bar__hint {
+    z-index: 1000;
+    display: none;
+    position: absolute;
+    top: 2px;
+    left: 140%;
+    color: white;
+    background-color: var(--mark-color);
+    width: max-content;
+    font-size: .8rem;
+    padding: .2rem;
+    border-radius: .2rem;
 }
 
 .tool-bar__size-switcher {

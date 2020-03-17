@@ -5,6 +5,17 @@ import { connect } from 'react-redux'
 const previewCnavasId = 'preview-canvas';
 
 class FrameBar extends Component {
+    createFrame() {
+        const [width, height] = [this.props.canvasSize.width, this.props.canvasSize.height];
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const dataURL = canvas.toDataURL();
+        return { imageData, dataURL }
+    }
+
     render() {
         return (
             <div className='frame-bar'>
@@ -45,7 +56,9 @@ class FrameBar extends Component {
                         )
                     })}
                 </div>
-                <button className='btn' onClick={ this.props.addFrame }>Add Frame</button>
+                <button className='btn'
+                    onClick={() => { this.props.addFrame(this.createFrame()) }}
+                >Add Frame</button>
             </div>
         )
     }
@@ -53,6 +66,7 @@ class FrameBar extends Component {
 
 export default connect(
     (state) => ({
+        canvasSize: state.sizeStore,
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
     }),
@@ -60,8 +74,8 @@ export default connect(
         setActiveFrame: (number) => {
             dispatch({ type: 'CHANGE_CURRENT_FRAME', number });
         },
-        addFrame: () => {
-            dispatch({ type: 'ADD_FRAME' });
+        addFrame: (cleanFrame) => {
+            dispatch({ type: 'ADD_FRAME', cleanFrame });
         },
         deleteFrame: (number) => {
             dispatch({ type: 'DELETE_FRAME', number });

@@ -19,7 +19,8 @@ class ToolBar extends Component {
                     {toolBtnList.map((btn, i) => {
                         return <ToolButton key={i} icon={btn.icon} data={btn.name}
                             active={btn.name === this.props.activeTool}
-                            changeTool={this.props.setCurrentTool}/>
+                            changeTool={this.props.setCurrentTool}
+                            hint={btn.hint}/>
                     })}
                 </div>
                 <div className='tool-bar__color-switcher indigo z-depth-2'>
