@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import './side.css'
 import UPNG from 'upng-js'
 import download from 'downloadjs'
+import { convertImgData } from '../../../service'
 
 const modalApngId = 'modal-apng';
-const modalPngId = 'modal-png'
+const modalPngId = 'modal-png';
+const canvasId = 'main-canvas';
 
 function Modal(props) {
     return (
@@ -50,19 +52,26 @@ class SideBar extends Component {
         const promiseArray = this.handleFiles(this.refs.in.files);
         const files = await Promise.all(promiseArray);
         const buffer = files.map((img) => {
-            return { imageData: this.extractImageData(img), dataURL: img.src}
+            return this.extractImageData(img)
         });
         this.props.setBuffer(buffer);
-        document.getElementById('main-canvas').dispatchEvent(new Event('refrash'));
+        document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
     }
 
     extractImageData(img) {
         const canvas = document.createElement('canvas');
-        canvas.width = 480;
-        canvas.height = 480;
+        const [width, height, scale] = [
+            this.props.canvasSize.width, this.props.canvasSize.height, this.props.canvasSize.scale
+        ];
+        canvas.width = width;
+        canvas.height = height;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, 480, 480);
-        return ctx.getImageData(0, 0, 480, 480);
+        ctx.drawImage(img, 0, 0, width, height);
+        const imageData = convertImgData(ctx.getImageData(0, 0, width, height), { width, height, scale });
+        ctx.putImageData(imageData, 0, 0);
+        const dataURL = canvas.toDataURL();
+
+        return { imageData, dataURL };
     }
 
     handleFiles(files) {

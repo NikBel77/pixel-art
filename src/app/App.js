@@ -12,7 +12,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 document.addEventListener('DOMContentLoaded', function() {
   let elems = document.querySelectorAll('.modal');
-  window.M.Modal.init(elems);
+  if(window.M) {
+    window.M.Modal.init(elems);
+  }
 });
 
 class App extends Component {

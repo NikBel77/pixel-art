@@ -35,19 +35,18 @@ class Painter extends Component {
             this.refs.mainCanvas.dispatchEvent(new MouseEvent('mouseup', e));
         });
         document.body.addEventListener('contextmenu', (e) => e.preventDefault());
+
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
-        this.refs.mainCanvas.addEventListener('refrash', (e) => {
-            console.log(e)
-            if (this.props.bufferArray[this.props.currentFrame].dataURL) {
-                const img = new Image(this.props.canvasSize.width, this.props.canvasSize.height);
-                img.src = this.props.bufferArray[this.props.currentFrame].dataURL;
+        this.refs.mainCanvas.addEventListener('refrash', () => {
+            if (this.props.bufferArray[this.props.currentFrame].imageData) {
+                const imgData = this.props.bufferArray[this.props.currentFrame].imageData;
                 this.refs.mainCanvas.getContext('2d')
-                    .drawImage(img, 0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+                    .putImageData(imgData, 0, 0);
             }
         });
-        this.refs.mainCanvas.dispatchEvent(new CustomEvent('refrash'));
 
+        this.refs.mainCanvas.dispatchEvent(new CustomEvent('refrash'));
         this.setCursor(this.activeTool)
         this.toggleCanvasEvents(this.activeTool);
     }
