@@ -60,12 +60,23 @@ function currentFrameStore(state = initialFrameData, action) {
 
 //ImageDataStore
 
-const createCleanImageData = () => new ImageData(initialSizeStore.width, initialSizeStore.height);
-const initialImageDataState = [{ imageData: createCleanImageData(), dataURL: null}];
+const createFrame = () => {
+    const [width, height] = [initialSizeStore.width, initialSizeStore.height];
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const dataURL = canvas.toDataURL();
+
+    return { imageData, dataURL }
+}
+const initFrame = createFrame();
+const initialImageDataState = [initFrame];
 
 function imageDataStore(state = initialImageDataState, action) {
     switch(action.type) {
-        case 'ADD_FRAME': return [...state, { imageData: createCleanImageData(), dataURL: null }]
+        case 'ADD_FRAME': return [...state, createFrame()]
         case 'CHANGE_DATA_URL': return state.map((data, i) => {
             if(i === action.number) {
                 return { imageData: data.imageData, dataURL: action.dataURL }

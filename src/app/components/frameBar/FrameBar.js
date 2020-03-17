@@ -5,18 +5,7 @@ import { connect } from 'react-redux'
 const previewCnavasId = 'preview-canvas';
 
 class FrameBar extends Component {
-    createFrame() {
-        const [width, height] = [this.props.canvasSize.width, this.props.canvasSize.height];
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        const imageData = ctx.getImageData(0, 0, width, height);
-        const dataURL = canvas.toDataURL();
-        return { imageData, dataURL }
-    }
-
-    render() {
+    render() {   
         return (
             <div className='frame-bar'>
                 <div className='frame-bar__frame-wrapper'>
@@ -57,7 +46,7 @@ class FrameBar extends Component {
                     })}
                 </div>
                 <button className='btn'
-                    onClick={() => { this.props.addFrame(this.createFrame()) }}
+                    onClick={() => { this.props.addFrame() }}
                 >Add Frame</button>
             </div>
         )

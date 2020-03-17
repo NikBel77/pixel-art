@@ -58,7 +58,7 @@ class SideBar extends Component {
         if (!buffer || !buffer.length) return
         this.props.setActiveFrame(0);
         this.props.setBuffer(buffer);
-        
+
         document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
         document.getElementById(previewCnavasId).dispatchEvent(new Event('refrash'));
     }
@@ -107,21 +107,22 @@ class SideBar extends Component {
             <div className='side-bar'>
 
                 <div className='side-bar__settings'>
-                    <Link to='/' className='btn side-bar__settings-btn'>Back</Link>
+
                     <button data-target={modalPngId}
                         className="btn modal-trigger side-bar__settings-btn"
                     >save as png</button>
                     <button data-target={modalApngId}
                         className="btn modal-trigger side-bar__settings-btn"
                     >save as apng</button>
-                    <div className='side-bar__settings-btn'>
-                        <input ref='in' type='file' style={{ display: 'none' }}
-                            id='uploader' onChange={this.upload.bind(this)}
-                            multiple accept="image/*"
-                        />
-                        <label htmlFor='uploader' className='btn'>upload files</label>
-                    </div>
-                    
+                    <input ref='in' type='file' style={{ display: 'none' }}
+                        id='uploader' onChange={this.upload.bind(this)}
+                        multiple accept="image/*"
+                    />
+                    <label htmlFor='uploader' className='side-bar__settings-btn btn'>
+                        Upload files
+                    </label>
+                    <Link to='/' className='btn side-bar__settings-btn'>Back</Link>
+
                 </div>
                 <Modal modalId={modalPngId} inputId='input-1' format='.png'
                     save={this.downloadPNG.bind(this)}
