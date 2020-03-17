@@ -57,7 +57,7 @@ class Preview extends Component {
                             onInput={ (e) => {
                                 this.props.changeFps(e.nativeEvent.target.value);
                                 clearInterval(this.animationPlayer);
-                                this.animationPlayer = this.startAnimation(1000 / this.state.fpsValue);
+                                this.animationPlayer = this.startAnimation(1000 / this.props.fps);
                             }}> 
                         </input>
                         <label htmlFor='fps-controller' className='preview__fps-view'>

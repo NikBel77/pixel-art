@@ -47,14 +47,11 @@ class Painter extends Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        // if (this.activeFrame !== nextProps.currentFrame) {
-        //     const ctx = this.refs.mainCanvas.getContext('2d')
-        //     const imgData = ctx.getImageData(0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
-
-        //     this.props.saveImageData(imgData, this.activeFrame);
-        //     ctx.putImageData(this.props.bufferArray[nextProps.currentFrame].imageData, 0, 0);
-        //     this.activeFrame = nextProps.currentFrame;
-        // }
+        if (this.activeFrame !== nextProps.currentFrame) {
+            const ctx = this.refs.mainCanvas.getContext('2d')
+            ctx.putImageData(this.props.bufferArray[nextProps.currentFrame].imageData, 0, 0);
+            this.activeFrame = nextProps.currentFrame;
+        }
         if (nextProps.activeTool !== this.activeTool) {
             this.toggleCanvasEvents(this.activeTool, true);
             this.toggleCanvasEvents(nextProps.activeTool);
