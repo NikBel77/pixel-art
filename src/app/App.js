@@ -10,6 +10,11 @@ import ColorPanel from './components/colorPanel/colorPanel'
 import Landing from './components/landing/Landing'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+document.addEventListener('DOMContentLoaded', function() {
+  let elems = document.querySelectorAll('.modal');
+  window.M.Modal.init(elems);
+});
+
 class App extends Component {
   render() {
     return (
