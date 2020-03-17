@@ -7,19 +7,21 @@ export default {
     pen: {
         mousedown: function(e) {
             e.preventDefault();
-            // const ctx = e.target.getContext('2d');
-            // const scale = this.props.canvasSize.scale;
-            // const penSize = this.props.canvasSize.penSize;
-            // const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
+            const ctx = e.target.getContext('2d');
+            const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
+            const [left, top] = [this.state.coords.left, this.state.coords.top];
+            const scale = this.props.canvasSize.scale;
+            const penSize = this.props.canvasSize.penSize;
             const [x, y] = [this.state.coords.x, this.state.coords.y];
-            penDrawing.setLastCoords(x, y);
+
+            penDrawing.dispatchSettings({ x, y, scale, penSize });
+            penDrawing.drawSinglePixel({ ctx, color, left, top });
         },
         mousemove: function(e) {
             if(e.which === 0) return;
             e.preventDefault();
+
             const ctx = e.target.getContext('2d');
-            // const scale = this.props.canvasSize.scale;
-            // const penSize = this.props.canvasSize.penSize;
             const color = e.which === 1 ? this.props.mainColor : this.props.auxColor;
             const [x, y] = [this.state.coords.x, this.state.coords.y];
 
@@ -65,27 +67,24 @@ export default {
         mousedown: function(e) {
             e.preventDefault();
             const ctx = e.target.getContext('2d');
+            const color = this.props.initialColor;
+            const [left, top] = [this.state.coords.left, this.state.coords.top];
             const scale = this.props.canvasSize.scale;
             const penSize = this.props.canvasSize.penSize;
-            const color = this.props.initialColor;
-            const [x, y] = [this.state.coords.left, this.state.coords.top];
-            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
-            imgData = paintAllPixel(imgData, color);
-            ctx.putImageData(imgData, x, y);
+            const [x, y] = [this.state.coords.x, this.state.coords.y];
+
+            penDrawing.dispatchSettings({ x, y, scale, penSize });
+            penDrawing.drawSinglePixel({ ctx, color, left, top });
         },
         mousemove: function(e) {
             if(e.which === 0) return;
             e.preventDefault();
-            const ctx = e.target.getContext('2d');
-            const scale = this.props.canvasSize.scale;
-            const penSize = this.props.canvasSize.penSize;
-            const color = this.props.initialColor;
-            const [x, y] = [this.state.coords.left, this.state.coords.top];
-            if (x === this.state.coords.x * scale && y / scale === this.state.coords.y * scale) return;
 
-            let imgData = ctx.getImageData(x, y, scale * penSize, scale * penSize);
-            imgData = paintAllPixel(imgData, color);
-            ctx.putImageData(imgData, x, y);
+            const ctx = e.target.getContext('2d');
+            const color = this.props.initialColor;
+            const [x, y] = [this.state.coords.x, this.state.coords.y];
+
+            penDrawing.drawing(color, {x, y}, ctx);
         }
     },
     dropper: {

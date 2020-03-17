@@ -9,7 +9,7 @@ class SideBar extends Component {
     downloadAPNG() {
         const buffer = this.props.bufferArray.map((frame) => frame.imageData.data.buffer);
         const [width, height] = [this.props.canvasSize.width, this.props.canvasSize.height];
-        const fps = 10
+        const fps = this.props.fps;
         const delays = new Array(buffer.length).fill(1000 / fps);
         const cnum = 0;
         const apng = UPNG.encode(buffer, width, height, cnum, delays);
@@ -44,6 +44,7 @@ export default connect(
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
         canvasSize: state.sizeStore,
+        fps: state.sizeStore.previewFps,
     }),
     () => ({})
 )(SideBar)
