@@ -7,7 +7,6 @@ class Preview extends Component {
         super(props);
 
         this.state = {
-            fpsValue: 10,
             maxFps: 16,
             minFps: 1,
         }
@@ -19,7 +18,7 @@ class Preview extends Component {
     componentDidMount() {
         this.refs.previewCanvas.width = this.props.previewCanvasSize;
         this.refs.previewCanvas.height = this.props.previewCanvasSize;
-        this.animationPlayer = this.startAnimation(1000 / this.state.fpsValue);
+        this.animationPlayer = this.startAnimation(1000 / this.props.fps);
     }
 
     componentWillUnmount() {
@@ -41,12 +40,6 @@ class Preview extends Component {
         else this.frameCounter += 1;
     }
 
-    changeFps(value) {
-        this.setState({
-            fpsValue: value,
-        })
-    }
-
     render() {
         return (
             <div className='preview'>
@@ -57,18 +50,18 @@ class Preview extends Component {
                     </div>
                     <div className='preview__fps-controller'>
                         <input type='range' id='fps-controller'
-                            defaultValue={this.state.fpsValue}
+                            defaultValue={this.props.fps}
                             max={this.state.maxFps}
                             min={this.state.minFps}
                             step={1}
                             onInput={ (e) => {
-                                this.changeFps(e.nativeEvent.target.value);
+                                this.props.changeFps(e.nativeEvent.target.value);
                                 clearInterval(this.animationPlayer);
                                 this.animationPlayer = this.startAnimation(1000 / this.state.fpsValue);
                             }}> 
                         </input>
                         <label htmlFor='fps-controller' className='preview__fps-view'>
-                            FPS: <span>{this.state.fpsValue}</span>
+                            FPS: <span>{this.props.fps}</span>
                         </label>
                     </div>
                 </div>
@@ -80,9 +73,12 @@ class Preview extends Component {
 export default connect(
     (state) => ({
         previewCanvasSize: state.sizeStore.previewCanvasSize,
+        fps: state.sizeStore.previewFps,
         bufferArray: state.imageDataStore,
     }),
     (dispatch) => ({
-        
+        changeFps: (previewFps) => {
+            dispatch({ type: 'CHANGE_FPS', previewFps });
+        }
     })
 )(Preview)

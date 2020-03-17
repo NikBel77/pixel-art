@@ -25,11 +25,13 @@ const initialSizeStore = {
     scale: 8,
     penSize: 1, /* correct pen size must be numbers: 1, 2, 3 or 4 */
     previewCanvasSize: 184,
+    previewFps: 10,
 }
 
 function sizeStore(state = initialSizeStore, action) {
     switch(action.type) {
         case 'CHANGE_PEN_SIZE': return Object.assign({}, state, { penSize: action.penSize });
+        case 'CHANGE_FPS': return Object.assign({}, state, { previewFps: action.previewFps });
         default: return state;
     }
 }
