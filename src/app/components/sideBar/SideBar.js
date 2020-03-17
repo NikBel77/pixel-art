@@ -12,7 +12,7 @@ function Modal(props) {
     return (
         <div id={props.modalId} className="modal">
             <div className="modal-content">
-                <div className="input-field col s6">
+                <div className="input-field">
                     <input id={props.inputId} type="text" data-length="10" />
                     <label htmlFor={props.inputId}>Enter file name</label>
                 </div>
@@ -44,6 +44,33 @@ class SideBar extends Component {
         const png = this.props.bufferArray[this.props.currentFrame].dataURL;
         download(png, `${filename}.png`, 'png');
     }
+    async upload() {
+        const promiseArray = this.handleFiles(this.refs.in.files);
+        const files = await Promise.all(promiseArray);
+        console.log(files)
+    }
+
+    handleFiles(files) {
+        const result = [];
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            if (!file.type.startsWith('image/')) continue;
+
+            let img = document.createElement("img");
+            img.file = file;
+
+            let reader = new FileReader();
+            const promise = new Promise(resolve => {
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    resolve(img);
+                }
+            });
+            reader.readAsDataURL(file);
+            result.push(promise);
+        }
+        return result;
+    }
 
     render() {
         return (
@@ -52,6 +79,12 @@ class SideBar extends Component {
                 <div className='side-bar__settings'>
                     <button data-target={modalPngId} className="btn modal-trigger">save as png</button>
                     <button data-target={modalApngId} className="btn modal-trigger">save as apng</button>
+                </div>
+                <div>
+                    <input ref='in' type='file' style={{ display: 'none' }}
+                        id='uploader' onChange={this.upload.bind(this)}
+                    />
+                    <label htmlFor='uploader' className='btn'>upload file</label>
                 </div>
                 <Modal modalId={modalPngId} inputId='input-1' format='.png'
                     save={this.downloadPNG.bind(this)}
