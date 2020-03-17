@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './painter.css'
 import canvasEventList from './canvasEventList'
+import cursorsMap from './cursors'
 import { connect } from 'react-redux'
 
 class Painter extends Component {
@@ -43,6 +44,7 @@ class Painter extends Component {
             this.refs.mainCanvas.getContext('2d').drawImage(img, 0, 0);
         }
 
+        this.setCursor(this.activeTool)
         this.toggleCanvasEvents(this.activeTool);
     }
 
@@ -56,8 +58,15 @@ class Painter extends Component {
             this.toggleCanvasEvents(this.activeTool, true);
             this.toggleCanvasEvents(nextProps.activeTool);
             this.activeTool = nextProps.activeTool;
+            this.setCursor(this.activeTool)
         }
         return true;
+    }
+
+    setCursor(tool) {
+        const cursor = cursorsMap.get(tool);
+        this.refs.mainCanvas.style.cursor = `url(${cursor.url}) ${cursor.x} ${cursor.y}, auto`;
+        this.refs.shadow.style.cursor = `url(${cursor.url}) ${cursor.x} ${cursor.y}, auto`;
     }
 
     bindEvents(eventList) {
