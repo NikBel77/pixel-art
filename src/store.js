@@ -78,6 +78,9 @@ function imageDataStore(state = initialImageDataState, action) {
             }
             return data;
         });
+        case 'SET_BUFFER_ARRAY': return action.buffer.map((data) => {
+            return { imageData: data.imageData, dataURL: data.dataURL }
+        })
         default: return state;
     }
 }

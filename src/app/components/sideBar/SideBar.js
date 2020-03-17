@@ -39,15 +39,30 @@ class SideBar extends Component {
 
         download(apng, `${filename}.png`, 'apng');
     }
+
     downloadPNG(filename) {
         if (!this.props.bufferArray[this.props.currentFrame].dataURL) return
         const png = this.props.bufferArray[this.props.currentFrame].dataURL;
         download(png, `${filename}.png`, 'png');
     }
+
     async upload() {
         const promiseArray = this.handleFiles(this.refs.in.files);
         const files = await Promise.all(promiseArray);
-        console.log(files)
+        const buffer = files.map((img) => {
+            return { imageData: this.extractImageData(img), dataURL: img.src}
+        });
+        this.props.setBuffer(buffer);
+        document.getElementById('main-canvas').dispatchEvent(new Event('refrash'));
+    }
+
+    extractImageData(img) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 480;
+        canvas.height = 480;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 480, 480);
+        return ctx.getImageData(0, 0, 480, 480);
     }
 
     handleFiles(files) {
@@ -75,7 +90,7 @@ class SideBar extends Component {
     render() {
         return (
             <div className='side-bar'>
-                <Link to='/' className='btn btn-small'>Back</Link>
+                <Link to='/' className='btn'>Back</Link>
                 <div className='side-bar__settings'>
                     <button data-target={modalPngId} className="btn modal-trigger">save as png</button>
                     <button data-target={modalApngId} className="btn modal-trigger">save as apng</button>
@@ -83,6 +98,7 @@ class SideBar extends Component {
                 <div>
                     <input ref='in' type='file' style={{ display: 'none' }}
                         id='uploader' onChange={this.upload.bind(this)}
+                        multiple accept="image/*"
                     />
                     <label htmlFor='uploader' className='btn'>upload file</label>
                 </div>
@@ -104,5 +120,9 @@ export default connect(
         canvasSize: state.sizeStore,
         fps: state.sizeStore.previewFps,
     }),
-    () => ({})
+    (dispatch) => ({
+        setBuffer: (buffer) => {
+            dispatch({ type: 'SET_BUFFER_ARRAY', buffer })
+        }
+    })
 )(SideBar)

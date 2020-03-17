@@ -37,12 +37,16 @@ class Painter extends Component {
         document.body.addEventListener('contextmenu', (e) => e.preventDefault());
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
-
-        if (this.props.bufferArray[this.props.currentFrame].dataURL) {
-            const img = new Image(this.props.canvasSize.width, this.props.canvasSize.height);
-            img.src = this.props.bufferArray[this.props.currentFrame].dataURL;
-            this.refs.mainCanvas.getContext('2d').drawImage(img, 0, 0);
-        }
+        this.refs.mainCanvas.addEventListener('refrash', (e) => {
+            console.log(e)
+            if (this.props.bufferArray[this.props.currentFrame].dataURL) {
+                const img = new Image(this.props.canvasSize.width, this.props.canvasSize.height);
+                img.src = this.props.bufferArray[this.props.currentFrame].dataURL;
+                this.refs.mainCanvas.getContext('2d')
+                    .drawImage(img, 0, 0, this.props.canvasSize.width, this.props.canvasSize.height);
+            }
+        });
+        this.refs.mainCanvas.dispatchEvent(new CustomEvent('refrash'));
 
         this.setCursor(this.activeTool)
         this.toggleCanvasEvents(this.activeTool);
@@ -60,6 +64,7 @@ class Painter extends Component {
             this.activeTool = nextProps.activeTool;
             this.setCursor(this.activeTool)
         }
+        
         return true;
     }
 
@@ -151,7 +156,7 @@ class Painter extends Component {
                     onMouseMove={this.checkShadow}
                     ref='wrapper'>
 
-                    <canvas className='painter__canvas' ref='mainCanvas'
+                    <canvas className='painter__canvas' ref='mainCanvas' id='main-canvas'
                         data-tool={null}
                         onMouseMove={(e) => {
                             this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY))
