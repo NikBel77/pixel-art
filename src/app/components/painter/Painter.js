@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 class Painter extends Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             coords: {
                 x: 0,
@@ -139,7 +139,7 @@ class Painter extends Component {
     }
 
     checkShadow = (e) => {
-        if (e.nativeEvent.which) return;
+        if (e.nativeEvent.buttons) return;
         if (this.refs.shadow.style.display === 'block') return;
         this.refs.shadow.style.display = 'block';
     }
