@@ -25,5 +25,10 @@
     --frame-color: #66bb6a;
     --frame-active-color: #ffb300;
     --frame-aux-color: #757575;
+    --app-bckg-color: #e0e0e0;
     font-size: 15px;
+}
+
+body {
+    background-color: var(--app-bckg-color);
 }

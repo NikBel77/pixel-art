@@ -3,6 +3,7 @@ import './frame.css'
 import { connect } from 'react-redux'
 
 const previewCnavasId = 'preview-canvas';
+const canvasId = 'main-canvas';
 
 class FrameBar extends Component {
     render() {   
@@ -28,6 +29,9 @@ class FrameBar extends Component {
                                     document.getElementById(previewCnavasId)
                                         .dispatchEvent(new CustomEvent('refrash'));
                                     this.props.deleteFrame(i);
+
+                                    document.getElementById(canvasId)
+                                        .dispatchEvent(new CustomEvent('refrash'));
                                     this.forceUpdate();
                                 }}
                             ></div>

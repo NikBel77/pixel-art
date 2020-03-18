@@ -45,4 +45,17 @@ function convertImgData(imgData, { scale, width, height }) {
     return imgData
 }
 
-export { getRandomRgbColor, getRandomCoords, getRandomScale, RgbToRgba, convertImgData };
+function convertHEXToRGBA(colorHex) {
+
+    if (colorHex[0] !== '#') return false;
+    if (colorHex.length !== 7) return false;
+
+    const r = parseInt(colorHex.slice(1, 3), 16);
+    const g = parseInt(colorHex.slice(3, 5), 16);
+    const b = parseInt(colorHex.slice(5, 7), 16);
+
+    return `rgba(${r},${g},${b},255)`;
+}
+
+
+export { getRandomRgbColor, getRandomCoords, getRandomScale, RgbToRgba, convertImgData, convertHEXToRGBA };

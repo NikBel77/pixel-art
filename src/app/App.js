@@ -24,7 +24,7 @@ class App extends Component {
         <Switch>
           <Route path='/' exact component={Landing} />
           <Route path='/app'>
-            <div className='app grey lighten-2'>
+            <div className='app'>
               <Header />
               <ToolBar />
               <Painter />

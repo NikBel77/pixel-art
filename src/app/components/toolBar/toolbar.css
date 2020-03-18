@@ -92,6 +92,26 @@
     border-radius: .1rem;
 }
 
+.tool-bar__swaper {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tool-bar__swaper:hover {
+    background-color: var(--button-active-color) !important;
+}
+.tool-bar__swaper:hover .tool-bar__hint {
+    display: flex;
+}
+.tool-bar__swaper i {
+    color: var(--frame-active-color);
+}
+
 .tool-bar__color-switcher {
     position: relative;
     display: flex;
@@ -101,7 +121,6 @@
     border-radius: .2rem;
     min-width: 50px;
     min-height: 50px;
-    cursor: pointer;
 }
 
 .tool-bar__color-holder {
@@ -111,6 +130,7 @@
     margin: .4rem 0;
     border-radius: .2rem;
     border: 1px solid var(--button-bkg-color);
+    cursor: pointer;
 }
 
 .tool-bar__color-holder:hover {
