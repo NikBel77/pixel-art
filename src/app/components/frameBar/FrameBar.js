@@ -29,7 +29,7 @@ class FrameBar extends Component {
                                     document.getElementById(previewCnavasId)
                                         .dispatchEvent(new CustomEvent('refrash'));
                                     this.props.deleteFrame(i);
-
+                                    
                                     document.getElementById(canvasId)
                                         .dispatchEvent(new CustomEvent('refrash'));
                                     this.forceUpdate();

@@ -39,8 +39,11 @@ class Painter extends Component {
         this.refs.mainCanvas.width = this.props.canvasSize.width;
         this.refs.mainCanvas.height = this.props.canvasSize.height;
         this.refs.mainCanvas.addEventListener('refrash', () => {
-            if (this.props.bufferArray[this.props.currentFrame].imageData) {
-                const imgData = this.props.bufferArray[this.props.currentFrame].imageData;
+            let frame = this.props.currentFrame;
+
+            if(!this.props.bufferArray[frame]) frame = 0;
+            if(this.props.bufferArray[frame].imageData) {
+                const imgData = this.props.bufferArray[frame].imageData;
                 this.refs.mainCanvas.getContext('2d')
                     .putImageData(imgData, 0, 0);
             }
