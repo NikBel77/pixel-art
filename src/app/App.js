@@ -10,9 +10,9 @@ import ColorPanel from './components/colorPanel/colorPanel'
 import Landing from './components/landing/Landing'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   let elems = document.querySelectorAll('.modal');
-  if(window.M) {
+  if (window.M) {
     window.M.Modal.init(elems);
   }
 });
@@ -26,12 +26,14 @@ class App extends Component {
           <Route path='/app'>
             <div className='app'>
               <Header />
-              <ToolBar />
-              <Painter />
-              <FrameBar />
-              <Preview />
-              <SideBar />
-              <ColorPanel />
+              <div className='app__inner'>
+                <ToolBar />
+                <Painter />
+                <FrameBar />
+                <Preview />
+                <SideBar />
+                <ColorPanel />
+              </div>
             </div>
           </Route>
         </Switch>
