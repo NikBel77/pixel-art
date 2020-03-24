@@ -4,8 +4,23 @@ import { ToolButton, SizeButton } from './buttons'
 import { toolBtnList, sizeBtnList } from './toolList'
 import { connect } from 'react-redux'
 import { convertHEXToRGBA } from '../../../service'
+import keySwitcher from './keySwitch'
 
 class ToolBar extends Component {
+    constructor(props) {
+        super(props)
+
+        this.switcher = keySwitcher.bind(this);
+    }
+
+    componentDidMount() {
+        this.setKeyboardHandler();
+    }
+
+    setKeyboardHandler() {        
+        window.addEventListener('keypress', this.switcher);
+    }
+
     render() {
         return (
             <div className='tool-bar'>
