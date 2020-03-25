@@ -4,21 +4,20 @@ import { ToolButton, SizeButton } from './buttons'
 import { toolBtnList, sizeBtnList } from './toolList'
 import { connect } from 'react-redux'
 import { convertHEXToRGBA } from '../../../service'
-import keySwitcher from './keySwitch'
+import getKeySwitcher from './keySwitch'
 
 class ToolBar extends Component {
     constructor(props) {
         super(props)
 
-        this.switcher = keySwitcher.bind(this);
+        this.switcher = getKeySwitcher(this.props.keyStore).bind(this);
+        this.deleteSwitcher = this.keyboardHandler();
     }
 
-    componentDidMount() {
-        this.setKeyboardHandler();
-    }
-
-    setKeyboardHandler() {        
+    keyboardHandler() {        
         window.addEventListener('keypress', this.switcher);
+        
+        return () => { window.removeEventListener('keypress', this.switcher) }
     }
 
     render() {
@@ -91,6 +90,7 @@ export default connect(
         auxColor: state.colorStore.auxColor,
         penSize: state.sizeStore.penSize,
         activeTool: state.toolStore.activeTool,
+        keyStore: state.keyEventStore,
     }),
     (dispatch) => ({
         setCurrentTool: (tool) => {

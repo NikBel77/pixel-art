@@ -95,19 +95,47 @@ function imageDataStore(state = initialImageDataState, action) {
         case 'DELETE_FRAME': {
             if(state.length === 1) return state
             state.splice(action.number, 1);
-            return state
+            return state;
         }
         case 'COPY_FRAME': {
             state.splice(action.number, 0, state[action.number]);
-            return state
+            return state;
         }
+        default: return state;
+    }
+}
+
+//keyStore
+
+const initialKeyStore = {
+    penKey: 'KeyP',
+    fillKey: 'KeyF',
+    eraserKey: 'KeyE',
+    dropperKey: 'KeyD',
+    switchColorKey: 'KeyS',
+    penSize1: 'Digit1',
+    penSize2: 'Digit2',
+    penSize3: 'Digit3',
+    penSize4: 'Digit4',
+}
+
+function keyEventStore(state = initialKeyStore, action) {
+    switch(action.type) {
+        case 'CHANGE_STATE': return Object.assign({}, state, action.keyNames);
         default: return state;
     }
 }
 
 //combine
 
-const appStore = combineReducers({ colorStore, toolStore, sizeStore, imageDataStore, currentFrameStore });
+const appStore = combineReducers({
+    colorStore,
+    toolStore,
+    sizeStore,
+    imageDataStore,
+    currentFrameStore,
+    keyEventStore
+});
 const store = createStore(appStore);
 
 export { store }

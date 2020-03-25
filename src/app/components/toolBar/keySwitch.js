@@ -1,45 +1,47 @@
-export default function keySwitcher(e) {
-    switch(e.code) {
+export default function getKeySwitcher(keyState) {
+    return function(e) {
 
-        case 'KeyP': {
-            this.props.setCurrentTool('pen');
-            break
-        }
-        case 'KeyF': {
-            this.props.setCurrentTool('fill');
-            break
-        }
-        case 'KeyE': {
-            this.props.setCurrentTool('eraser');
-            break
-        }
-        case 'KeyD': {
-            this.props.setCurrentTool('dropper');
-            break
-        }
-        case 'KeyS': {
-            const [mainColor, auxColor] = [this.props.mainColor, this.props.auxColor];
-            this.props.setMainColor(auxColor);
-            this.props.setAuxColor(mainColor);
-            break
-        }
-        case 'Digit1': {
-            this.props.setPenSize(1);
-            break
-        }
-        case 'Digit2': {
-            this.props.setPenSize(2);
-            break
-        }
-        case 'Digit3': {
-            this.props.setPenSize(3);
-            break
-        }
-        case 'Digit4': {
-            this.props.setPenSize(4);
-            break
-        }
-        default: break
+        switch(e.code) {
 
+            case keyState.penKey: {
+                this.props.setCurrentTool('pen');
+                break
+            }
+            case keyState.fillKey: {
+                this.props.setCurrentTool('fill');
+                break
+            }
+            case keyState.eraserKey: {
+                this.props.setCurrentTool('eraser');
+                break
+            }
+            case keyState.dropperKey: {
+                this.props.setCurrentTool('dropper');
+                break
+            }
+            case keyState.switchColorKey: {
+                const [mainColor, auxColor] = [this.props.mainColor, this.props.auxColor];
+                this.props.setMainColor(auxColor);
+                this.props.setAuxColor(mainColor);
+                break
+            }
+            case keyState.penSize1: {
+                this.props.setPenSize(1);
+                break
+            }
+            case keyState.penSize2: {
+                this.props.setPenSize(2);
+                break
+            }
+            case keyState.penSize3: {
+                this.props.setPenSize(3);
+                break
+            }
+            case keyState.penSize4: {
+                this.props.setPenSize(4);
+                break
+            }
+            default: break
+        }
     }
 }
