@@ -22,6 +22,7 @@ class Painter extends Component {
         Object.keys(canvasEventList).forEach((event) => {
             this.canvasEvents[event] = Object.assign({}, canvasEventList[event]);
         });
+        
     }
 
     componentDidMount() {
@@ -50,8 +51,8 @@ class Painter extends Component {
         });
 
         this.refs.mainCanvas.dispatchEvent(new CustomEvent('refrash'));
-        this.setCursor(this.activeTool)
-        this.toggleCanvasEvents(this.activeTool);
+        this.setCursor(this.activeTool);
+        this.toggleCanvasEvents(this.activeTool);        
     }
 
     shouldComponentUpdate(nextProps) {

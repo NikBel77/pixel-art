@@ -1,12 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './app.css'
-import FrameBar from './components/frameBar/FrameBar'
-import ToolBar from './components/toolBar/ToolBar'
-import SideBar from './components/sideBar/SideBar'
-import Header from './components/header/Header'
-import Painter from './components/painter/Painter'
-import Preview from './components/preview/Preview'
-import ColorPanel from './components/colorPanel/colorPanel'
+import AppInner from './components/AppInner'
 import Landing from './components/landing/Landing'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -23,19 +17,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path='/' exact component={Landing} />
-          <Route path='/app'>
-            <div className='app'>
-              <Header />
-              <div className='app__inner'>
-                <ToolBar />
-                <Painter />
-                <FrameBar />
-                <Preview />
-                <SideBar />
-                <ColorPanel />
-              </div>
-            </div>
-          </Route>
+          <Route path='/:frame' component={AppInner} />
         </Switch>
       </Router>
     )

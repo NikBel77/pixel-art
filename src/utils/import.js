@@ -8,10 +8,17 @@ async function importImagesByLink(link, settings) {
     return buffer
 }
 
-function importLocalImages(imageArray, settings) {
-    const buffer = [];
-    imageArray.foreEach((img) => {
-        buffer.push(extractImageData(img, settings));
+async function importLocalImages(imageSrcArray, settings) {
+    const promiseArray = imageSrcArray.map((src) => {
+        const img = document.createElement('img');
+        img.src = src;
+        return new Promise(resolve => {
+            img.onload = () => { resolve(img) };
+        });
+    });
+    const imgArray = await Promise.all(promiseArray);
+    const buffer = imgArray.map((img) => {
+        return extractImageData(img, settings);
     });
     return buffer
 }
@@ -26,7 +33,6 @@ function extractImageData(img, { width, height, scale }) {
     const imageData = convertImgData(ctx.getImageData(0, 0, width, height), { width, height, scale });
     ctx.putImageData(imageData, 0, 0);
     const dataURL = canvas.toDataURL();
-
     return { imageData, dataURL };
 }
 
@@ -36,7 +42,7 @@ function handleFiles(files) {
         let file = files[i];
         if (!file.type.startsWith('image/')) continue;
 
-        let img = document.createElement("img");
+        let img = document.createElement('img');
         img.file = file;
 
         let reader = new FileReader();

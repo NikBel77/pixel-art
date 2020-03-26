@@ -30,7 +30,7 @@ class Landing extends Component {
             <div className='landing grey lighten-2'>
                 <div className='landing__inner'>
                     <h1 className='landing__header'>Pixel Art</h1>
-                    <Link to='/app' className='btn btn-large'>Start</Link>
+                    <Link to='/new' className='btn btn-large'>Start</Link>
                 </div>
                 <canvas className='landing__canvas' ref='landingCanvas'></canvas>
             </div>
