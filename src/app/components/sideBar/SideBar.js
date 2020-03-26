@@ -63,7 +63,6 @@ class SideBar extends Component {
                     <label htmlFor='uploader' className='side-bar__settings-btn btn'>
                         import files
                     </label>
-                    <Link to='/' className='btn side-bar__settings-btn'>Back</Link>
 
                 </div>
                 <Modal modalId={modalPngId} inputId='input-1' format='.png'

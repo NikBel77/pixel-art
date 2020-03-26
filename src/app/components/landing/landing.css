@@ -28,16 +28,45 @@
 
 .hints {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr .4fr;
+    grid-template-rows: 1fr .4fr;
+    grid-template-areas:
+    "main key"
+    "bott key";
+    column-gap: 1rem;
+    row-gap: 1rem;
     font-size: 1.3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .hints__main-block {
+    grid-area: main;
     border: .1rem solid gray;
     border-radius: .2rem;
     padding: .4rem;
+}
+
+.hints__keyboard-block {
+    grid-area: key;
+    border: .1rem solid gray;
+    border-radius: .2rem;
+    padding: .4rem;
+    font-size: .9rem;
+}
+
+.hints__keyboard-block p:first-child {
+    margin-bottom: .6rem;
+}
+
+.hints__mouse-block {
+    grid-area: bott;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: .1rem solid gray;
+    border-radius: .2rem;
+    padding: .3rem;
+    font-size: .9rem;
 }
 
 .exemples {

@@ -34,7 +34,7 @@ class AppInner extends Component {
         const frame = this.props.match.params.frame;
         const { width, height, scale } = this.props.canvasSettings;
         let imageArray = imageMap.get(frame);
-        if(!imageArray) return
+        if (!imageArray) return
 
         importLocalImages(imageArray, { width, height, scale })
             .then((buffer) => {
