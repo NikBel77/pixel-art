@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './side.css'
-import UPNG from 'upng-js'
-import download from 'downloadjs'
-import { convertImgData } from '../../../utils/service'
+import { importImagesByLink } from '../../../utils/import'
+import { downloadAPNG, downloadPNG } from '../../../utils/export'
 
 const modalApngId = 'modal-apng';
 const modalPngId = 'modal-png';
@@ -32,76 +31,6 @@ function Modal(props) {
 }
 
 class SideBar extends Component {
-    downloadAPNG(filename) {
-        const buffer = this.props.bufferArray.map((frame) => frame.imageData.data.buffer);
-        const [width, height] = [this.props.canvasSize.width, this.props.canvasSize.height];
-        const fps = this.props.fps;
-        const delays = new Array(buffer.length).fill(1000 / fps);
-        const cnum = 0;
-        const apng = UPNG.encode(buffer, width, height, cnum, delays);
-
-        download(apng, `${filename}.apng`, 'apng');
-    }
-
-    downloadPNG(filename) {
-        if (!this.props.bufferArray[this.props.currentFrame].dataURL) return
-        const png = this.props.bufferArray[this.props.currentFrame].dataURL;
-        download(png, `${filename}.png`, 'png');
-    }
-
-    async upload() {
-        const promiseArray = this.handleFiles(this.refs.in.files);
-        const files = await Promise.all(promiseArray);
-        const buffer = files.map((img) => {
-            return this.extractImageData(img);
-        });
-        if (!buffer || !buffer.length) return
-        this.props.setActiveFrame(0);
-        this.props.setBuffer(buffer);
-
-        document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
-        document.getElementById(previewCnavasId).dispatchEvent(new Event('refrash'));
-    }
-
-    extractImageData(img) {
-        if (!img.src) return
-        const canvas = document.createElement('canvas');
-        const [width, height, scale] = [
-            this.props.canvasSize.width, this.props.canvasSize.height, this.props.canvasSize.scale
-        ];
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-        const imageData = convertImgData(ctx.getImageData(0, 0, width, height), { width, height, scale });
-        ctx.putImageData(imageData, 0, 0);
-        const dataURL = canvas.toDataURL();
-
-        return { imageData, dataURL };
-    }
-
-    handleFiles(files) {
-        const result = [];
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i];
-            if (!file.type.startsWith('image/')) continue;
-
-            let img = document.createElement("img");
-            img.file = file;
-
-            let reader = new FileReader();
-            const promise = new Promise(resolve => {
-                reader.onload = (e) => {
-                    img.src = e.target.result;
-                    resolve(img);
-                }
-            });
-            reader.readAsDataURL(file);
-            result.push(promise);
-        }
-        return result;
-    }
-
     render() {
         return (
             <div className='side-bar'>
@@ -110,25 +39,41 @@ class SideBar extends Component {
 
                     <button data-target={modalPngId}
                         className="btn modal-trigger side-bar__settings-btn"
-                    >save as png</button>
+                    >save single frame</button>
                     <button data-target={modalApngId}
                         className="btn modal-trigger side-bar__settings-btn"
-                    >save as apng</button>
-                    <input ref='in' type='file' style={{ display: 'none' }}
-                        id='uploader' onChange={this.upload.bind(this)}
+                    >export as apng</button>
+                    <input ref='importFiles' type='file' style={{ display: 'none' }}
+                        id='uploader'
+                        onChange={() => {
+                            const { width, height, scale } = this.props.canvasSettings;
+                            importImagesByLink(this.refs.importFiles, { width, height, scale })
+                                .then((buffer) => {
+                                    this.props.setActiveFrame(0);
+                                    this.props.setBuffer(buffer);
+
+                                    document.getElementById(canvasId).dispatchEvent(new Event('refrash'));
+                                    document.getElementById(previewCnavasId).dispatchEvent(new Event('refrash'));
+                                });
+                        }}
                         multiple accept="image/*"
                     />
                     <label htmlFor='uploader' className='side-bar__settings-btn btn'>
-                        Upload files
+                        import files
                     </label>
                     <Link to='/' className='btn side-bar__settings-btn'>Back</Link>
 
                 </div>
                 <Modal modalId={modalPngId} inputId='input-1' format='.png'
-                    save={this.downloadPNG.bind(this)}
+                    save={(fileName) => {
+                        downloadPNG(this.props.bufferArray, this.props.currentFrame, fileName);
+                    }}
                 />
                 <Modal modalId={modalApngId} inputId='input-2' format='.apng'
-                    save={this.downloadAPNG.bind(this)}
+                    save={(fileName) => {
+                        const { fps, width, height } = this.props.canvasSettings;
+                        downloadAPNG(this.props.bufferArray, { fps, width, height }, fileName);
+                    }}
                 />
             </div>
         )
@@ -139,7 +84,7 @@ export default connect(
     (state) => ({
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
-        canvasSize: state.settingsStore,
+        canvasSettings: state.settingsStore,
         fps: state.settingsStore.previewFps,
     }),
     (dispatch) => ({

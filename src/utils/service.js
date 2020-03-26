@@ -22,29 +22,6 @@ function RgbToRgba(rgb) {
     return `rgba(${color.join()},255)`
 }
 
-function convertImgData(imgData, { scale, width, height }) {
-
-    for (let i = 0; i < (width * height * 4); i += width * 4 * scale) {
-        for (let j = 0; j < (width * 4); j += scale * 4) {
-
-            const r = imgData.data[i + j];
-            const g = imgData.data[i + j + 1];
-            const b = imgData.data[i + j + 2];
-            const a = imgData.data[i + j + 3];
-
-            for (let k = 0; k < (width * 4 * scale); k += width * 4) {
-                for (let n = 0; n < scale * 4; n += 4) {
-                    imgData.data[i + j + k + n] = r;
-                    imgData.data[i + j + k + n + 1] = g;
-                    imgData.data[i + j + k + n + 2] = b;
-                    imgData.data[i + j + k + n + 3] = a;
-                }
-            }
-        }
-    }
-    return imgData
-}
-
 function convertHEXToRGBA(colorHex) {
 
     if (colorHex[0] !== '#') return false;
@@ -95,7 +72,6 @@ export {
     getRandomCoords,
     getRandomScale,
     RgbToRgba,
-    convertImgData,
     convertHEXToRGBA,
     checkBrowser
 };
