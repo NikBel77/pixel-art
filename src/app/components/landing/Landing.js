@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './landing.css'
 import { Link } from 'react-router-dom';
-import { getRandomRgbColor, getRandomCoords, getRandomScale } from '../../../service'
+import { getRandomRgbColor, getRandomCoords, getRandomScale } from '../../../utils/service'
 
 let timer = null;
 const dalay = 1000;

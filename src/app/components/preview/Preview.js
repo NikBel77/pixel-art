@@ -77,8 +77,8 @@ class Preview extends Component {
 
 export default connect(
     (state) => ({
-        previewCanvasSize: state.sizeStore.previewCanvasSize,
-        fps: state.sizeStore.previewFps,
+        previewCanvasSize: state.settingsStore.previewCanvasSize,
+        fps: state.settingsStore.previewFps,
         bufferArray: state.imageDataStore,
     }),
     (dispatch) => ({

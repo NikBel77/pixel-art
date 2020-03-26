@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import './side.css'
 import UPNG from 'upng-js'
 import download from 'downloadjs'
-import { convertImgData } from '../../../service'
+import { convertImgData } from '../../../utils/service'
 
 const modalApngId = 'modal-apng';
 const modalPngId = 'modal-png';
@@ -139,8 +139,8 @@ export default connect(
     (state) => ({
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
-        canvasSize: state.sizeStore,
-        fps: state.sizeStore.previewFps,
+        canvasSize: state.settingsStore,
+        fps: state.settingsStore.previewFps,
     }),
     (dispatch) => ({
         setBuffer: (buffer) => {

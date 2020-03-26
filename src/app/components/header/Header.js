@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './header.css'
-import { getRandomRgbColor } from '../../../service'
+import { getRandomRgbColor } from '../../../utils/service'
 
 const color1 = getRandomRgbColor();
 const color2 = getRandomRgbColor();

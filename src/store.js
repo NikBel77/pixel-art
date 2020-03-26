@@ -19,7 +19,7 @@ function colorStore(state = initialColorsState, action) {
 
 //canvasSizeStore
 
-const initialSizeStore = {
+const initialSettingsStore = {
     width: 480, /* width and height must be devisible on scale for correct rendering */
     height: 480,
     scale: 8,
@@ -28,7 +28,7 @@ const initialSizeStore = {
     previewFps: 10,
 }
 
-function sizeStore(state = initialSizeStore, action) {
+function settingsStore(state = initialSettingsStore, action) {
     switch(action.type) {
         case 'CHANGE_PEN_SIZE': return Object.assign({}, state, { penSize: action.penSize });
         case 'CHANGE_FPS': return Object.assign({}, state, { previewFps: action.previewFps });
@@ -61,7 +61,7 @@ function currentFrameStore(state = initialFrameData, action) {
 //ImageDataStore
 
 const createFrame = () => {
-    const [width, height] = [initialSizeStore.width, initialSizeStore.height];
+    const [width, height] = [initialSettingsStore.width, initialSettingsStore.height];
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
@@ -131,7 +131,7 @@ function keyEventStore(state = initialKeyStore, action) {
 const appStore = combineReducers({
     colorStore,
     toolStore,
-    sizeStore,
+    settingsStore,
     imageDataStore,
     currentFrameStore,
     keyEventStore

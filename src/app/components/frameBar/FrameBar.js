@@ -59,7 +59,7 @@ class FrameBar extends Component {
 
 export default connect(
     (state) => ({
-        canvasSize: state.sizeStore,
+        canvasSize: state.settingsStore,
         bufferArray: state.imageDataStore,
         currentFrame: state.currentFrameStore,
     }),

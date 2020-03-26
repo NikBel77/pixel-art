@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './colors.css'
 import { connect } from 'react-redux'
 import ColorList from './colorList'
-import { RgbToRgba } from '../../../service'
+import { RgbToRgba } from '../../../utils/service'
 
 class ColorBtn extends Component {
     render() {

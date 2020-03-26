@@ -3,7 +3,7 @@ import './toolbar.css'
 import { ToolButton, SizeButton } from './buttons'
 import { toolBtnList, sizeBtnList } from './toolList'
 import { connect } from 'react-redux'
-import { convertHEXToRGBA } from '../../../service'
+import { convertHEXToRGBA } from '../../../utils/service'
 import getKeySwitcher from './keySwitch'
 
 class ToolBar extends Component {
@@ -88,7 +88,7 @@ export default connect(
     (state) => ({
         mainColor: state.colorStore.mainColor,
         auxColor: state.colorStore.auxColor,
-        penSize: state.sizeStore.penSize,
+        penSize: state.settingsStore.penSize,
         activeTool: state.toolStore.activeTool,
         keyStore: state.keyEventStore,
     }),

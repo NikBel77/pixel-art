@@ -5,7 +5,7 @@ import App from './app/App'
 import Error from './app/components/Error/Error'
 import { Provider } from 'react-redux'
 import { store } from './store'
-import { checkBrowser } from './service'
+import { checkBrowser } from './utils/service'
 
 const browserSuportedList = [
     'firefox', 'safari', 'chrome'

@@ -205,7 +205,7 @@ export default connect(
         auxColor: state.colorStore.auxColor,
         initialColor: state.colorStore.initialColor,
         activeTool: state.toolStore.activeTool,
-        canvasSize: state.sizeStore,
+        canvasSize: state.settingsStore,
         currentFrame: state.currentFrameStore,
         bufferArray: state.imageDataStore,
     }),
