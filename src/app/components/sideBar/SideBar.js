@@ -38,11 +38,13 @@ class SideBar extends Component {
                 <div className='side-bar__settings'>
 
                     <button data-target={modalPngId}
-                        className="btn modal-trigger side-bar__settings-btn"
-                    >save single frame</button>
+                        className="btn modal-trigger side-bar__settings-btn">
+                        save single frame
+                    </button>
                     <button data-target={modalApngId}
-                        className="btn modal-trigger side-bar__settings-btn"
-                    >export as apng</button>
+                        className="btn modal-trigger side-bar__settings-btn">
+                        export as apng
+                    </button>
                     <input ref='importFiles' type='file' style={{ display: 'none' }}
                         id='uploader'
                         onChange={() => {

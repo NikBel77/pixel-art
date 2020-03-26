@@ -41,7 +41,7 @@ function handleFiles(files) {
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
         if (!file.type.startsWith('image/')) continue;
-
+        
         let img = document.createElement('img');
         img.file = file;
 
