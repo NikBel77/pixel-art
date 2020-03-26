@@ -31,6 +31,11 @@ const previewCnavasId = 'preview-canvas';
 
 class AppInner extends Component {
     componentDidMount() {
+        let elems = document.querySelectorAll('.modal');
+        if (window.M) {
+            window.M.Modal.init(elems);
+        }
+        
         const frame = this.props.match.params.frame;
         const { width, height, scale } = this.props.canvasSettings;
         let imageArray = imageMap.get(frame);
