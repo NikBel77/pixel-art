@@ -27,6 +27,9 @@
     --frame-aux-color: #757575;
     --app-bckg-color: #e0e0e0;
     --error-color: #f4511e;
+    --l: 1120px;
+    --m: 980px;
+    --s: 400px;
     font-size: 15px;
 }
 

@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+@media(max-width: 1120px) {
+    .color-panel {
+        display: none;
+    }
+}
+
 .color-panel__wrapper {
     align-self: center;
     display: flex;

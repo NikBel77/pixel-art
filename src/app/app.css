@@ -6,3 +6,25 @@
     "tool frame paint color prev"
     "tool frame paint side side";
 }
+
+@media(max-width: 1120px) {
+    .app__inner {
+        grid-template-columns: 70px 1fr 520px 1.2fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: 
+        "tool frame paint prev"
+        "tool frame paint side";
+    }
+}
+
+@media(max-width: 980px) {
+    .app__inner {
+        grid-template-columns: .3fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        "tool paint paint"
+        "tool paint paint"
+        "frame frame side"
+        "frame frame prev";
+    }
+}

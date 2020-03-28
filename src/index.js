@@ -13,12 +13,6 @@ const browserSuportedList = [
 const browserMap = checkBrowser();
 const isSupported = browserSuportedList.some(bw => browserMap.get(bw));
 
-document.addEventListener('DOMContentLoaded', function() {
-    let elems = document.querySelectorAll('.modal');
-    if (window.M) {
-        window.M.Modal.init(elems);
-    }
-});
 ReactDOM.render((
     <Provider store={ store }>
         {isSupported ? (
