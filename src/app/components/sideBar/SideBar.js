@@ -17,7 +17,8 @@ function Modal(props) {
                     <input id={props.inputId} type="text" data-length="10" />
                     <label htmlFor={props.inputId}>Enter file name</label>
                 </div>
-                <button className="modal-close btn-small"
+                <button
+                    className="modal-close btn-small"
                     onClick={() => {
                         const input = document.getElementById(props.inputId);
                         props.save(input.value);

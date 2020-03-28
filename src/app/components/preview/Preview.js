@@ -41,7 +41,7 @@ class Preview extends Component {
         ctx.clearRect(0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
         ctx.drawImage(img, 0, 0, this.props.previewCanvasSize, this.props.previewCanvasSize);
 
-        if(this.frameCounter >= this.props.bufferArray.length - 1) this.frameCounter = 0;
+        if (this.frameCounter >= this.props.bufferArray.length - 1) this.frameCounter = 0;
         else this.frameCounter += 1;
     }
 
@@ -54,16 +54,18 @@ class Preview extends Component {
                         <canvas className='preview__canvas' ref='previewCanvas' id='preview-canvas'></canvas>
                     </div>
                     <div className='preview__fps-controller z-depth-2'>
-                        <input type='range' id='fps-controller'
+                        <input
+                            type='range'
+                            id='fps-controller'
                             defaultValue={this.props.fps}
                             max={this.state.maxFps}
                             min={this.state.minFps}
                             step={1}
-                            onInput={ (e) => {
+                            onInput={(e) => {
                                 this.props.changeFps(e.nativeEvent.target.value);
                                 clearInterval(this.animationPlayer);
                                 this.animationPlayer = this.startAnimation(1000 / this.props.fps);
-                            }}> 
+                            }}>
                         </input>
                         <label htmlFor='fps-controller' className='preview__fps-view'>
                             FPS: <span>{this.props.fps}</span>

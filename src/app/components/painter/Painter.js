@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 class Painter extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             coords: {
                 x: 0,
@@ -22,7 +22,7 @@ class Painter extends Component {
         Object.keys(canvasEventList).forEach((event) => {
             this.canvasEvents[event] = Object.assign({}, canvasEventList[event]);
         });
-        
+
     }
 
     componentDidMount() {
@@ -42,8 +42,8 @@ class Painter extends Component {
         this.refs.mainCanvas.addEventListener('refrash', () => {
             let frame = this.props.currentFrame;
 
-            if(!this.props.bufferArray[frame]) frame = 0;
-            if(this.props.bufferArray[frame].imageData) {
+            if (!this.props.bufferArray[frame]) frame = 0;
+            if (this.props.bufferArray[frame].imageData) {
                 const imgData = this.props.bufferArray[frame].imageData;
                 this.refs.mainCanvas.getContext('2d')
                     .putImageData(imgData, 0, 0);
@@ -52,7 +52,7 @@ class Painter extends Component {
 
         this.refs.mainCanvas.dispatchEvent(new CustomEvent('refrash'));
         this.setCursor(this.activeTool);
-        this.toggleCanvasEvents(this.activeTool);        
+        this.toggleCanvasEvents(this.activeTool);
     }
 
     shouldComponentUpdate(nextProps) {
@@ -67,7 +67,7 @@ class Painter extends Component {
             this.activeTool = nextProps.activeTool;
             this.setCursor(this.activeTool)
         }
-        
+
         return true;
     }
 
@@ -149,7 +149,8 @@ class Painter extends Component {
         return (
             <div className='painter'>
 
-                <div className='painter__inner z-depth-4'
+                <div
+                    className='painter__inner z-depth-4'
                     style={{
                         width: `${this.props.canvasSize.width}px`,
                         height: `${this.props.canvasSize.height}px`
@@ -159,7 +160,10 @@ class Painter extends Component {
                     onMouseMove={this.checkShadow}
                     ref='wrapper'>
 
-                    <canvas className='painter__canvas' ref='mainCanvas' id='main-canvas'
+                    <canvas
+                        className='painter__canvas'
+                        ref='mainCanvas'
+                        id='main-canvas'
                         data-tool={null}
                         onMouseMove={(e) => {
                             this.updateCoords(...this.getCoordsFromOffset(e.nativeEvent.offsetX, e.nativeEvent.offsetY))
@@ -172,8 +176,10 @@ class Painter extends Component {
                         }}>
                     </canvas>
 
-                    <div className='painter__coords painter__coords-rigth-side'
-                        ref='coordsScreen' onMouseEnter={(e) => { this.toggleCoordsSide(e.target) }}>
+                    <div
+                        className='painter__coords painter__coords-rigth-side'
+                        ref='coordsScreen'
+                        onMouseEnter={(e) => { this.toggleCoordsSide(e.target) }}>
                         X : {this.state.coords.x} Y : {this.state.coords.y}
                     </div>
 

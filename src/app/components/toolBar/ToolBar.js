@@ -14,9 +14,9 @@ class ToolBar extends Component {
         this.deleteSwitcher = this.keyboardHandler();
     }
 
-    keyboardHandler() {        
+    keyboardHandler() {
         window.addEventListener('keypress', this.switcher);
-        
+
         return () => { window.removeEventListener('keypress', this.switcher) }
     }
 
@@ -26,7 +26,10 @@ class ToolBar extends Component {
 
                 <div className='tool-bar__size-switcher indigo z-depth-2'>
                     {sizeBtnList.map((btn, i) => {
-                        return <SizeButton key={i} scale={btn.scale} data={btn.data}
+                        return <SizeButton
+                            key={i}
+                            scale={btn.scale}
+                            data={btn.data}
                             setPenSize={this.props.setPenSize}
                             active={this.props.penSize === btn.data} />
                     })}
@@ -34,7 +37,10 @@ class ToolBar extends Component {
 
                 <div className='tool-bar__panel indigo z-depth-2'>
                     {toolBtnList.map((btn, i) => {
-                        return <ToolButton key={i} icon={btn.icon} data={btn.name}
+                        return <ToolButton
+                            key={i}
+                            icon={btn.icon}
+                            data={btn.name}
                             active={btn.name === this.props.activeTool}
                             changeTool={this.props.setCurrentTool}
                             hint={btn.hint} />
@@ -52,30 +58,36 @@ class ToolBar extends Component {
                 </div>
 
                 <div className='tool-bar__color-switcher indigo z-depth-2'>
-                    <label className='tool-bar__color-holder' htmlFor='aux-palette'
+                    <label
+                        className='tool-bar__color-holder'
+                        htmlFor='aux-palette'
                         style={{ bottom: '2px', right: '6px', background: this.props.auxColor }}>
                     </label>
-                    <label className='tool-bar__color-holder' htmlFor='main-palette'
+                    <label
+                        className='tool-bar__color-holder'
+                        htmlFor='main-palette'
                         style={{ top: '2px', left: '6px', background: this.props.mainColor }}>
 
                     </label>
-                    <input style={{ display: 'none' }}
+                    <input
+                        style={{ display: 'none' }}
                         defaultValue={this.props.auxColor}
                         type='color'
                         id='main-palette'
                         onInput={(e) => {
                             const color = convertHEXToRGBA(e.target.value);
-                            if(color) this.props.setMainColor(color);
-                        }} 
+                            if (color) this.props.setMainColor(color);
+                        }}
                     />
-                    <input style={{ display: 'none' }}
+                    <input
+                        style={{ display: 'none' }}
                         defaultValue='red'
                         type='color'
                         id='aux-palette'
                         onInput={(e) => {
                             const color = convertHEXToRGBA(e.target.value);
-                            if(color) this.props.setAuxColor(color);
-                        }} 
+                            if (color) this.props.setAuxColor(color);
+                        }}
                     />
                 </div>
 
